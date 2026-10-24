@@ -1,0 +1,13 @@
+{
+  "name": "generate-channel-growth-plans.",
+  "version": "1.0.0",
+  "description": "Generate channel growth plans.",
+  "files": [
+    "report.md",
+    "report.html",
+    "index.html",
+    "requirements.txt",
+    "README.md"
+  ],
+  "status": "ready"
+}

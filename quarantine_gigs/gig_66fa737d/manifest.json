@@ -1,0 +1,15 @@
+{
+  "name": "build-a-keyword-cluster-and-internal-lin",
+  "version": "1.0.0",
+  "description": "Build a keyword cluster and internal-link mapper in Python 3",
+  "files": [
+    "keyword_cluster_engine.py",
+    "test_keyword_cluster_engine.py",
+    "README.md",
+    "index.html",
+    "model.py",
+    "test_deliverable.py",
+    "requirements.txt"
+  ],
+  "status": "ready"
+}
