@@ -1,0 +1,12 @@
+{
+  "name": "Content Calendar Engine",
+  "version": "1.0.0",
+  "description": "A deterministic social content calendar engine.",
+  "main": "content_calendar_engine.py",
+  "scripts": {
+    "test": "pytest test_content_calendar_engine.py"
+  },
+  "dependencies": {
+    "pytest": "^7.0.0"
+  }
+}
