@@ -1,0 +1,28 @@
+{
+  "requires": [],
+  "model": {
+    "calls": {}
+  },
+  "cases_by_fn": {},
+  "cases": [
+    {
+      "message": "I need help with my account balance.",
+      "expected_intent": "account_balance"
+    },
+    {
+      "message": "How can I cancel my subscription?",
+      "expected_intent": "cancel_subscription"
+    },
+    {
+      "message": "What are your return policies?",
+      "expected_intent": "return_policy"
+    },
+    {
+      "message": "I want to speak to a manager.",
+      "expected_intent": "escalate"
+    }
+  ],
+  "tolerance": 1e-06,
+  "notes": [],
+  "invented_requirements_dropped": []
+}
