@@ -1,0 +1,15 @@
+{
+  "name": "build-a-modular-python-3.12-package-for-",
+  "version": "1.0.0",
+  "description": "Build a modular Python 3.12 package for freelance gig optimi",
+  "files": [
+    "gig_engine.py",
+    "test_gig_engine.py",
+    "README.md",
+    "index.html",
+    "model.py",
+    "test_deliverable.py",
+    "requirements.txt"
+  ],
+  "status": "ready"
+}

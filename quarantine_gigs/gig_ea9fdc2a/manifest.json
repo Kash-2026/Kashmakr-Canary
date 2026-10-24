@@ -1,0 +1,14 @@
+{
+  "name": "generate-reel-scripts.",
+  "version": "1.0.0",
+  "description": "Generate Reel scripts.",
+  "files": [
+    "reel_script_product_launch.md",
+    "reel_script_behind_the_scenes.md",
+    "reel_script_customer_testimonial.md",
+    "index.html",
+    "requirements.txt",
+    "README.md"
+  ],
+  "status": "ready"
+}

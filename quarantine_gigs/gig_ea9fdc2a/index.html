@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate Reel scripts.</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --accent: #818cf8;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+    .preview-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    h1 {
+      margin: 0.75rem 0 0.5rem 0;
+      font-size: 1.6rem;
+      color: #f8fafc;
+      line-height: 1.25;
+    }
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+    .file-tag {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: #93c5fd;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+    .tabs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .tab-btn {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: monospace;
+      font-size: 0.85rem;
+      transition: all 0.15s ease;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+      border-color: #64748b;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 600;
+      border-color: var(--accent);
+    }
+    pre {
+      background: #070a12;
+      border: 1px solid #1e293b;
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      color: #e2e8f0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0;
+      font-family: "JetBrains Mono", Consolas, Menlo, monospace;
+    }
+    .pricing-card-demo {
+      max-width: 400px;
+      margin: 1.5rem auto 0.5rem auto;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .toggle-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .toggle-label.active {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #334155;
+      transition: .3s;
+      border-radius: 26px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #6366f1;
+    }
+    input:checked + .slider:before {
+      transform: translateX(22px);
+    }
+    .discount-badge {
+      background: #10b981;
+      color: #064e3b;
+      font-weight: 700;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 9999px;
+      display: inline-block;
+    }
+    .price-display {
+      margin: 1rem 0;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+    }
+    .currency { font-size: 1.5rem; font-weight: 600; color: #94a3b8; }
+    .amount { font-size: 3rem; font-weight: 800; color: #f8fafc; }
+    .period { font-size: 0.95rem; color: #94a3b8; margin-left: 4px; }
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+      text-align: left;
+    }
+    .feature-list li {
+      padding: 0.4rem 0;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .check { color: #10b981; font-weight: bold; }
+    .cta-btn {
+      width: 100%;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: #4f46e5; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <span class="badge">Production Deliverable Package</span>
+      <h1>Generate Reel scripts.</h1>
+      <div class="tags-container">
+        <span class="file-tag">reel_script_behind_the_scenes.md</span><span class="file-tag">reel_script_customer_testimonial.md</span><span class="file-tag">reel_script_product_launch.md</span>
+      </div>
+    </div>
+
+    
+
+    <div class="card">
+      <div class="tabs-bar" id="tabs-bar">
+        <button class="tab-btn active" onclick="showFile('reel_script_behind_the_scenes.md')">reel_script_behind_the_scenes.md</button><button class="tab-btn" onclick="showFile('reel_script_customer_testimonial.md')">reel_script_customer_testimonial.md</button><button class="tab-btn" onclick="showFile('reel_script_product_launch.md')">reel_script_product_launch.md</button>
+      </div>
+      <div id="editor-container">
+        <pre><code id="code-view">## Reel Script: Behind the Scenes
+
+### Scene 1: Introduction
+- **Visual:** Team members in the workspace.
+- **Text Overlay:** &quot;A Day in the Life of [Company Name]&quot;
+- **Voiceover:** &quot;Ever wondered what goes on behind the scenes?&quot;
+
+### Scene 2: Team Collaboration
+- **Visual:** Team brainstorming and working together.
+- **Text Overlay:** &quot;Innovation starts here.&quot;
+- **Voiceover:** &quot;Our team works tirelessly to bring you the best.&quot;
+
+### Scene 3: Product Development
+- **Visual:** Prototypes and design sketches.
+- **Text Overlay:** &quot;From concept to creation.&quot;
+- **Voiceover:** &quot;Watch how our ideas come to life.&quot;
+
+### Scene 4: Final Product
+- **Visual:** Finished product being showcased.
+- **Text Overlay:** &quot;The result of hard work and passion.&quot;
+- **Voiceover:** &quot;This is what we’re proud to share with you.&quot;</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const FILES = {"reel_script_product_launch.md": "## Reel Script: Product Launch\n\n### Scene 1: Introduction\n- **Visual:** Quick shots of the product from different angles.\n- **Text Overlay:** \"Introducing the [Product Name]!\"\n- **Voiceover:** \"Get ready to experience something amazing.\"\n\n### Scene 2: Features Highlight\n- **Visual:** Close-ups of key features.\n- **Text Overlay:** \"Feature 1: [Description]\"\n- **Voiceover:** \"Discover [Feature 1] that makes [Product Name] unique.\"\n\n### Scene 3: User Experience\n- **Visual:** Users interacting with the product.\n- **Text Overlay:** \"Experience like never before.\"\n- **Voiceover:** \"See how [Product Name] fits into your life.\"\n\n### Scene 4: Call to Action\n- **Visual:** Product packaging with a \u201cBuy Now\u201d button.\n- **Text Overlay:** \"Available now at [Store Name].\"\n- **Voiceover:** \"Don\u2019t miss out! Get yours today.\"", "reel_script_behind_the_scenes.md": "## Reel Script: Behind the Scenes\n\n### Scene 1: Introduction\n- **Visual:** Team members in the workspace.\n- **Text Overlay:** \"A Day in the Life of [Company Name]\"\n- **Voiceover:** \"Ever wondered what goes on behind the scenes?\"\n\n### Scene 2: Team Collaboration\n- **Visual:** Team brainstorming and working together.\n- **Text Overlay:** \"Innovation starts here.\"\n- **Voiceover:** \"Our team works tirelessly to bring you the best.\"\n\n### Scene 3: Product Development\n- **Visual:** Prototypes and design sketches.\n- **Text Overlay:** \"From concept to creation.\"\n- **Voiceover:** \"Watch how our ideas come to life.\"\n\n### Scene 4: Final Product\n- **Visual:** Finished product being showcased.\n- **Text Overlay:** \"The result of hard work and passion.\"\n- **Voiceover:** \"This is what we\u2019re proud to share with you.\"", "reel_script_customer_testimonial.md": "## Reel Script: Customer Testimonial\n\n### Scene 1: Introduction\n- **Visual:** Happy customer using the product.\n- **Text Overlay:** \"Hear from our satisfied customers!\"\n- **Voiceover:** \"Don\u2019t just take our word for it.\"\n\n### Scene 2: Customer Story\n- **Visual:** Customer sharing their experience.\n- **Text Overlay:** \"[Customer Name] says:\"\n- **Voiceover:** \"[Customer Name] shares their journey with [Product Name].\"\n\n### Scene 3: Benefits Highlighted\n- **Visual:** Customer enjoying the product\u2019s benefits.\n- **Text Overlay:** \"Why they love it:\"\n- **Voiceover:** \"Discover the difference [Product Name] made in their life.\"\n\n### Scene 4: Call to Action\n- **Visual:** Customer giving a thumbs up.\n- **Text Overlay:** \"Join the [Product Name] family.\"\n- **Voiceover:** \"Ready to experience it for yourself? Visit [Website].\""};
+
+    function showFile(filename) {
+      const content = FILES[filename] || "";
+      const codeView = document.getElementById("code-view");
+      if (codeView) codeView.textContent = content;
+
+      const buttons = document.querySelectorAll(".tab-btn");
+      buttons.forEach(btn => {
+        if (btn.textContent === filename) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+    }
+
+    const toggle = document.getElementById("billing-toggle");
+    if (toggle) {
+      toggle.addEventListener("change", function() {
+        const isAnnual = this.checked;
+        const amount = document.getElementById("price-amount");
+        const period = document.getElementById("price-period");
+        const mLabel = document.getElementById("monthly-label");
+        const aLabel = document.getElementById("annual-label");
+        if (isAnnual) {
+          if (amount) amount.textContent = "290";
+          if (period) period.textContent = "/year";
+          if (mLabel) mLabel.classList.remove("active");
+          if (aLabel) aLabel.classList.add("active");
+        } else {
+          if (amount) amount.textContent = "29";
+          if (period) period.textContent = "/month";
+          if (mLabel) mLabel.classList.add("active");
+          if (aLabel) aLabel.classList.remove("active");
+        }
+      });
+    }
+  </script>
+</body>
+</html>
