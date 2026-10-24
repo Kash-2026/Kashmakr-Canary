@@ -1,0 +1,11 @@
+{
+  "name": "Polite Web Scraper",
+  "version": "1.0.0",
+  "description": "A polite web scraper that respects robots.txt and crawl delays.",
+  "main": "scraper.py",
+  "scripts": {
+    "test": "pytest test_scraper.py"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
