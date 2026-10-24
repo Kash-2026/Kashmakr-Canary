@@ -1,0 +1,14 @@
+{
+  "name": "build-a-channel-growth-plan-engine-in-py",
+  "version": "1.0.0",
+  "description": "Build a channel growth plan engine in Python 3.12: models up",
+  "files": [
+    "channel_growth_engine.py",
+    "test_channel_growth_engine.py",
+    "README.md",
+    "requirements.txt",
+    "index.html",
+    "test_deliverable.py"
+  ],
+  "status": "ready"
+}
