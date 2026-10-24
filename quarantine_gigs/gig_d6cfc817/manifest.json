@@ -1,0 +1,10 @@
+{
+    "name": "Analytics Dashboard",
+    "version": "1.0.0",
+    "description": "A simple analytics dashboard with date range filtering and three types of charts.",
+    "main": "index.html",
+    "dependencies": {
+        "data": "data.json",
+        "script": "app.js"
+    }
+}

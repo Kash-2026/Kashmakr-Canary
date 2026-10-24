@@ -1,0 +1,7 @@
+[
+    { "date": "2023-01-01", "value": 10, "category": "A" },
+    { "date": "2023-01-02", "value": 20, "category": "B" },
+    { "date": "2023-01-03", "value": 30, "category": "C" },
+    { "date": "2023-01-04", "value": 40, "category": "A" },
+    { "date": "2023-01-05", "value": 50, "category": "B" }
+]
