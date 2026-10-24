@@ -1,0 +1,16 @@
+{
+  "name": "build-a-csv-to-markdown-table-converter-",
+  "version": "1.0.0",
+  "description": "Build a CSV to Markdown table converter CLI in Python 3.12 (",
+  "files": [
+    "csv2md.py",
+    "test_csv2md.py",
+    "sample.csv",
+    "README.md",
+    "index.html",
+    "model.py",
+    "test_deliverable.py",
+    "requirements.txt"
+  ],
+  "status": "ready"
+}

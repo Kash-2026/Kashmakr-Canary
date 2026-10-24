@@ -1,0 +1,24 @@
+{
+  "requires": [],
+  "model": {
+    "calls": {}
+  },
+  "cases_by_fn": {},
+  "cases": [
+    {
+      "rationale": "Ensure basic conversion functionality with simple input."
+    },
+    {
+      "rationale": "Test handling of complex inputs including quoted fields with commas and newlines."
+    },
+    {
+      "rationale": "Verify alignment specifications (left, center, right) are applied correctly."
+    },
+    {
+      "rationale": "Check that escaped pipe characters and --max-width option work as expected."
+    }
+  ],
+  "tolerance": 1e-06,
+  "notes": [],
+  "invented_requirements_dropped": []
+}

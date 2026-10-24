@@ -1,0 +1,11 @@
+{
+  "name": "csv2md",
+  "version": "1.0.0",
+  "description": "Convert CSV to Markdown table.",
+  "main": "csv2md.py",
+  "scripts": {
+    "test": "pytest test_csv2md.py"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
