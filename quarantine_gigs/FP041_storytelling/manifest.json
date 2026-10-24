@@ -1,0 +1,14 @@
+{
+  "name": "build-a-storytelling-concept-engine-in-p",
+  "version": "1.0.0",
+  "description": "Build a storytelling concept engine in Python 3.12: turns a",
+  "files": [
+    "storytelling_engine.py",
+    "test_storytelling_engine.py",
+    "README.md",
+    "index.html",
+    "test_deliverable.py",
+    "requirements.txt"
+  ],
+  "status": "ready"
+}
