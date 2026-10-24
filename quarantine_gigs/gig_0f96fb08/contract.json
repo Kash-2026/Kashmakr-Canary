@@ -1,0 +1,86 @@
+{
+  "requires": [
+    "calculate_bond_price",
+    "calculate_ytm"
+  ],
+  "model": {
+    "calls": {
+      "calculate_bond_price": "calculate_bond_price",
+      "calculate_ytm": "calculate_ytm"
+    }
+  },
+  "cases_by_fn": {
+    "calculate_bond_price": [],
+    "calculate_ytm": []
+  },
+  "cases": [
+    {
+      "face_value": 1000,
+      "coupon_rate": 0.05,
+      "years_to_maturity": 10,
+      "market_rate": 0.05
+    },
+    {
+      "face_value": 1000,
+      "coupon_rate": 0.06,
+      "years_to_maturity": 5,
+      "market_rate": 0.04
+    },
+    {
+      "face_value": 1000,
+      "coupon_rate": 0.04,
+      "years_to_maturity": 15,
+      "market_rate": 0.05
+    },
+    {
+      "face_value": 1000,
+      "coupon_rate": 0.07,
+      "years_to_maturity": 7,
+      "market_rate": 0.06
+    },
+    {
+      "face_value": 1000,
+      "coupon_rate": 0.05,
+      "years_to_maturity": 10,
+      "bond_price": 1000
+    },
+    {
+      "face_value": 1000,
+      "coupon_rate": 0.06,
+      "years_to_maturity": 5,
+      "bond_price": 1020
+    },
+    {
+      "face_value": 1000,
+      "coupon_rate": 0.04,
+      "years_to_maturity": 15,
+      "bond_price": 980
+    },
+    {
+      "face_value": 1000,
+      "coupon_rate": 0.07,
+      "years_to_maturity": 7,
+      "bond_price": 1030
+    }
+  ],
+  "tolerance": 1e-06,
+  "notes": [
+    "calculate_bond_price: engine unknown kwargs ['face_value', 'market_rate'] in calculate_bond_price",
+    "calculate_bond_price: engine unknown kwargs ['face_value', 'market_rate'] in calculate_bond_price",
+    "calculate_bond_price: engine unknown kwargs ['face_value', 'market_rate'] in calculate_bond_price",
+    "calculate_bond_price: engine unknown kwargs ['face_value', 'market_rate'] in calculate_bond_price",
+    "calculate_bond_price: engine unknown kwargs ['face_value', 'bond_price'] in calculate_bond_price",
+    "calculate_bond_price: engine unknown kwargs ['face_value', 'bond_price'] in calculate_bond_price",
+    "calculate_bond_price: engine unknown kwargs ['face_value', 'bond_price'] in calculate_bond_price",
+    "calculate_bond_price: engine unknown kwargs ['face_value', 'bond_price'] in calculate_bond_price",
+    "calculate_ytm: engine unknown kwargs ['face_value', 'market_rate'] in calculate_ytm",
+    "calculate_ytm: engine unknown kwargs ['face_value', 'market_rate'] in calculate_ytm",
+    "calculate_ytm: engine unknown kwargs ['face_value', 'market_rate'] in calculate_ytm",
+    "calculate_ytm: engine unknown kwargs ['face_value', 'market_rate'] in calculate_ytm",
+    "calculate_ytm: engine unknown kwargs ['face_value', 'bond_price'] in calculate_ytm",
+    "calculate_ytm: engine unknown kwargs ['face_value', 'bond_price'] in calculate_ytm",
+    "calculate_ytm: engine unknown kwargs ['face_value', 'bond_price'] in calculate_ytm",
+    "calculate_ytm: engine unknown kwargs ['face_value', 'bond_price'] in calculate_ytm"
+  ],
+  "invented_requirements_dropped": []
+}
