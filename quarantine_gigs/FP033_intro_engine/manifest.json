@@ -1,0 +1,12 @@
+{
+  "name": "Introduction Engine",
+  "version": "1.0.0",
+  "description": "Generates introduction variants from a topic and hook type, enforces thesis presence, and scores clarity and promise.",
+  "main": "intro_engine.py",
+  "scripts": {
+    "test": "pytest test_intro_engine.py"
+  },
+  "dependencies": {
+    "pytest": "^7.0.0"
+  }
+}
