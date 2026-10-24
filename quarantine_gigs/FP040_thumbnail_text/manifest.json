@@ -1,0 +1,62 @@
+{
+  "name": "thumbnail_text_engine",
+  "description": "Generates short thumbnail text from a video concept, enforces character and contrast constraints, and scores hook strength.",
+  "functions": [
+    {
+      "name": "generate_thumbnail_text",
+      "description": "Generates thumbnail text from a video concept.",
+      "args": [
+        {
+          "name": "video_concept",
+          "type": "str",
+          "description": "The concept or title of the video."
+        },
+        {
+          "name": "max_chars",
+          "type": "int",
+          "description": "Maximum number of characters allowed in the thumbnail text."
+        },
+        {
+          "name": "min_contrast",
+          "type": "float",
+          "description": "Minimum contrast score required for the text."
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "description": "Generated thumbnail text."
+      }
+    },
+    {
+      "name": "calculate_contrast_score",
+      "description": "Calculates the contrast score of the given text.",
+      "args": [
+        {
+          "name": "text",
+          "type": "str",
+          "description": "The text to calculate the contrast score for."
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "description": "The contrast score of the text."
+      }
+    },
+    {
+      "name": "score_hook_strength",
+      "description": "Scores the hook strength of the given thumbnail text.",
+      "args": [
+        {
+          "name": "thumbnail_text",
+          "type": "str",
+          "description": "The thumbnail text to score."
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "description": "The hook strength score of the thumbnail text."
+      }
+    }
+  ],
+  "constants": []
+}
