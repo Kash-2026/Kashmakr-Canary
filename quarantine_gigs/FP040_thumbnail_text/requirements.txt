@@ -1,0 +1,3 @@
+## Usage
+
+Import the module and use the `generate_thumbnail_text` function to generate thumbnail text:
