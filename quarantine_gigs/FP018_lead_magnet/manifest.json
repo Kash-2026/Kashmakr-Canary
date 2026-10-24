@@ -1,0 +1,12 @@
+{
+  "name": "Lead Magnet Planner",
+  "version": "1.0.0",
+  "description": "A tool to generate lead magnet concepts, format/delivery choices, and conversion-likelihood scores.",
+  "main": "lead_magnet_engine.py",
+  "scripts": {
+    "test": "pytest test_lead_magnet_engine.py"
+  },
+  "dependencies": {
+    "pytest": "^7.0.0"
+  }
+}
