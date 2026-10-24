@@ -1,0 +1,14 @@
+{
+  "name": "build-a-giveaway-campaign-planner-in-pyt",
+  "version": "1.0.0",
+  "description": "Build a giveaway campaign planner in Python 3.12: builds a g",
+  "files": [
+    "giveaway_engine.py",
+    "test_giveaway_engine.py",
+    "README.md",
+    "index.html",
+    "test_deliverable.py",
+    "requirements.txt"
+  ],
+  "status": "ready"
+}
