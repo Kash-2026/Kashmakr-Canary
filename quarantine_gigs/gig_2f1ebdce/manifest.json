@@ -1,0 +1,13 @@
+{
+  "name": "generate-carousel-posts.",
+  "version": "1.0.0",
+  "description": "Generate carousel posts.",
+  "files": [
+    "report.md",
+    "report.html",
+    "index.html",
+    "requirements.txt",
+    "README.md"
+  ],
+  "status": "ready"
+}

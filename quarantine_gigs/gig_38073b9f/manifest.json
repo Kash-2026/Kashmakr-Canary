@@ -1,0 +1,14 @@
+{
+  "name": "build-a-freelance-portfolio-engine-in-py",
+  "version": "1.0.0",
+  "description": "Build a freelance portfolio engine in Python 3.12: turns pro",
+  "files": [
+    "portfolio_engine.py",
+    "test_portfolio_engine.py",
+    "README.md",
+    "requirements.txt",
+    "index.html",
+    "test_deliverable.py"
+  ],
+  "status": "ready"
+}

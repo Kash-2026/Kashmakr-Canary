@@ -1,0 +1,21 @@
+{
+  "requires": [],
+  "model": {
+    "calls": {}
+  },
+  "cases_by_fn": {},
+  "cases": [
+    {
+      "rationale": "Ensure the portfolio engine handles empty input gracefully."
+    },
+    {
+      "rationale": "Verify the engine can process a typical set of project records."
+    },
+    {
+      "rationale": "Check the engine's behavior with edge cases, such as projects with zero values or negative metrics."
+    }
+  ],
+  "tolerance": 1e-06,
+  "notes": [],
+  "invented_requirements_dropped": []
+}

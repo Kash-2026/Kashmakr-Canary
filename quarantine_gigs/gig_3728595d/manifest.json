@@ -1,0 +1,13 @@
+{
+  "name": "create-educational-content.",
+  "version": "1.0.0",
+  "description": "Create educational content.",
+  "files": [
+    "report.md",
+    "report.html",
+    "index.html",
+    "requirements.txt",
+    "README.md"
+  ],
+  "status": "ready"
+}
