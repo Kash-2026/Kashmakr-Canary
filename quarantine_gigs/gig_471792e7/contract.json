@@ -1,0 +1,38 @@
+{
+  "requires": [],
+  "model": {
+    "calls": {}
+  },
+  "cases_by_fn": {},
+  "cases": [
+    {
+      "venture_spec": {
+        "customer_segments": "Tech enthusiasts",
+        "value_proposition": "Innovative gadgets",
+        "channels": "Online store",
+        "customer_relationships": "Loyalty program",
+        "revenue_streams": "Direct sales",
+        "key_resources": "Patented technology",
+        "key_activities": "Product development",
+        "key_partnerships": "Suppliers",
+        "cost_structure": "R&D expenses"
+      }
+    },
+    {
+      "venture_spec": {
+        "customer_segments": "Health-conscious individuals",
+        "value_proposition": "Organic food delivery",
+        "channels": "Mobile app",
+        "customer_relationships": "Subscription service",
+        "revenue_streams": "Subscription fees",
+        "key_resources": "Fresh produce",
+        "key_activities": "Logistics management",
+        "key_partnerships": "Farmers",
+        "cost_structure": "Delivery costs"
+      }
+    }
+  ],
+  "tolerance": 1e-06,
+  "notes": [],
+  "invented_requirements_dropped": []
+}

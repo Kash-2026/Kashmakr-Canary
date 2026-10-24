@@ -1,0 +1,15 @@
+{
+  "name": "build-a-business-model-canvas-engine-in-",
+  "version": "1.0.0",
+  "description": "Build a business model canvas engine in Python 3.12: fills a",
+  "files": [
+    "business_canvas_engine.py",
+    "test_business_canvas_engine.py",
+    "README.md",
+    "index.html",
+    "model.py",
+    "test_deliverable.py",
+    "requirements.txt"
+  ],
+  "status": "ready"
+}
