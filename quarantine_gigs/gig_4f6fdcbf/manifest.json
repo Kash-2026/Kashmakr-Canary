@@ -1,0 +1,9 @@
+{
+  "name": "agent_planner",
+  "version": "1.0.0",
+  "description": "A deterministic multi-step planning agent.",
+  "main": "agent_planner.py",
+  "scripts": {
+    "test": "pytest test_agent_planner.py"
+  }
+}

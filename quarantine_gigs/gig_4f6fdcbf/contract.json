@@ -1,0 +1,71 @@
+{
+  "requires": [],
+  "model": {
+    "calls": {}
+  },
+  "cases_by_fn": {},
+  "cases": [
+    {
+      "goal": "Test simple task execution",
+      "tasks": [
+        {
+          "name": "task1",
+          "dependencies": []
+        },
+        {
+          "name": "task2",
+          "dependencies": [
+            "task1"
+          ]
+        }
+      ]
+    },
+    {
+      "goal": "Test task failure and retry",
+      "tasks": [
+        {
+          "name": "task1",
+          "dependencies": []
+        },
+        {
+          "name": "task2",
+          "dependencies": [
+            "task1"
+          ],
+          "retry": 2
+        }
+      ]
+    },
+    {
+      "goal": "Test complex dependency graph",
+      "tasks": [
+        {
+          "name": "task1",
+          "dependencies": []
+        },
+        {
+          "name": "task2",
+          "dependencies": [
+            "task1"
+          ]
+        },
+        {
+          "name": "task3",
+          "dependencies": [
+            "task2"
+          ]
+        },
+        {
+          "name": "task4",
+          "dependencies": [
+            "task3",
+            "task1"
+          ]
+        }
+      ]
+    }
+  ],
+  "tolerance": 1e-06,
+  "notes": [],
+  "invented_requirements_dropped": []
+}
