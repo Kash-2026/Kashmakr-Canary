@@ -29,8 +29,6 @@ jobs:
 
     - name: Install System & Browser Dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y libgl1-mesa-glx
         python -m pip install --upgrade pip
         pip install -r requirements.txt || true
         pip install pytest playwright fastapi uvicorn boto3 fastmcp \
