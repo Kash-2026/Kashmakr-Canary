@@ -1,0 +1,4 @@
+## Usage
+Import the engine and use the provided functions to optimize freelance gigs.
+
+## Testing
