@@ -1,0 +1,14 @@
+{
+  "name": "build-a-youtube-description-engine-in-py",
+  "version": "1.0.0",
+  "description": "Build a youtube description engine in Python 3.12: builds de",
+  "files": [
+    "youtube_description_engine.py",
+    "test_youtube_description_engine.py",
+    "README.md",
+    "requirements.txt",
+    "index.html",
+    "test_deliverable.py"
+  ],
+  "status": "ready"
+}

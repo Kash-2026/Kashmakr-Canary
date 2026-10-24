@@ -1,0 +1,44 @@
+name: Kashmakr Cloud Canary Run
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      gigs:
+        description: 'Quarantined Gig IDs to verify'
+        required: false
+        default: 'FP031 FP032 FP035 FP037 FP038 FP043 FP046 FP047 FP048 FP053 FP054 FP057 FP059'
+
+jobs:
+  canary-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Test Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+
+    - name: Execute Canary Quarantine Suite
+      run: |
+        echo "=== Running Cloud Canary Suite for Quarantined Gigs ==="
+        python canary_runner.py ${{ github.event.inputs.gigs || 'FP031 FP032 FP035 FP037 FP038 FP043 FP046 FP047 FP048 FP053 FP054 FP057 FP059' }}
+
+    - name: Upload Canary Run Proofs
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: cloud-canary-proofs
+        path: canary_cloud_report.json
