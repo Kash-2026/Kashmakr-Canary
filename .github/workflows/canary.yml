@@ -7,15 +7,15 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
     inputs:
-      batch_args:
-        description: 'Arguments or target IDs for the run'
+      gigs:
+        description: 'Quarantined Gig IDs to verify'
         required: false
-        default: '--first 5'
+        default: 'FP031 FP032 FP035 FP037 FP038 FP043 FP046 FP047 FP048 FP053 FP054 FP057 FP059'
 
 jobs:
   canary-tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
 
     steps:
     - name: Checkout Code
@@ -25,33 +25,20 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-        cache: 'pip'
 
-    - name: Install System & Browser Dependencies
+    - name: Install Test Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt || true
-        pip install pytest playwright fastapi uvicorn boto3 fastmcp \
-                      sqlalchemy scikit-learn numpy
-        playwright install chromium --with-deps
+        pip install pytest sqlalchemy scikit-learn numpy
 
-    - name: Run Cloud Headless Canary Suite
-      env:
-        KM_SKIP_RAM_DISK_PROVISION: "1"
-        CI: "true"
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION || 'us-east-1' }}
+    - name: Execute Canary Quarantine Suite
       run: |
-        echo "Starting cloud harness verification..."
-        python -m pytest Engine/ -q --maxfail=5 || true
+        echo "=== Running Cloud Canary Suite for Quarantined Gigs ==="
+        python canary_runner.py ${{ github.event.inputs.gigs || 'FP031 FP032 FP035 FP037 FP038 FP043 FP046 FP047 FP048 FP053 FP054 FP057 FP059' }}
 
-    - name: Upload Canary Run Artifacts
+    - name: Upload Canary Run Proofs
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: canary-run-reports
-        path: |
-          Engine/outputs/
-          Engine/fresh_prompts/PILOT_RESULTS.json
-          Engine/fresh_prompts/PILOT_RUN.log
+        name: cloud-canary-proofs
+        path: canary_cloud_report.json
