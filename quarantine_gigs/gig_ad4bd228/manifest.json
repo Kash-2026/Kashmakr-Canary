@@ -1,0 +1,15 @@
+{
+  "name": "build-a-faq-cluster-and-answer-engine-in",
+  "version": "1.0.0",
+  "description": "Build a faq cluster and answer engine in Python 3.12: extrac",
+  "files": [
+    "faq_engine.py",
+    "test_faq_engine.py",
+    "README.md",
+    "requirements.txt",
+    "index.html",
+    "model.py",
+    "test_deliverable.py"
+  ],
+  "status": "ready"
+}
