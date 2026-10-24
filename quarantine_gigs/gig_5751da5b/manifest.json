@@ -1,0 +1,15 @@
+{
+  "name": "build-a-seo-title-and-meta-description-e",
+  "version": "1.0.0",
+  "description": "Build a seo title and meta description engine in Python 3.12",
+  "files": [
+    "seo_metadata_engine.py",
+    "test_seo_metadata_engine.py",
+    "README.md",
+    "requirements.txt",
+    "index.html",
+    "model.py",
+    "test_deliverable.py"
+  ],
+  "status": "ready"
+}
