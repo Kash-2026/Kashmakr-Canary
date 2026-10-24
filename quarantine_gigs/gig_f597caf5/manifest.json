@@ -1,0 +1,14 @@
+{
+  "name": "analyze-competitors.",
+  "version": "1.0.0",
+  "description": "Analyze competitors.",
+  "files": [
+    "index.html",
+    "index.js",
+    "model.py",
+    "test_deliverable.py",
+    "requirements.txt",
+    "README.md"
+  ],
+  "status": "ready"
+}

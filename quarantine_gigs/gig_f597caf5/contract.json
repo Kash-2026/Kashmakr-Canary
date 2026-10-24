@@ -1,0 +1,54 @@
+{
+  "requires": [],
+  "model": {
+    "calls": {}
+  },
+  "cases_by_fn": {},
+  "cases": [
+    {
+      "competitors": [
+        {
+          "name": "Competitor A",
+          "marketShare": "25%",
+          "strengths": [
+            "Strong brand",
+            "High customer loyalty"
+          ],
+          "weaknesses": [
+            "High prices"
+          ]
+        },
+        {
+          "name": "Competitor B",
+          "marketShare": "15%",
+          "strengths": [
+            "Innovative products",
+            "Agile development"
+          ],
+          "weaknesses": [
+            "Smaller market presence"
+          ]
+        }
+      ]
+    },
+    {
+      "competitors": [
+        {
+          "name": "Competitor C",
+          "marketShare": "0%",
+          "strengths": [
+            "New entrant",
+            "Innovative technology"
+          ],
+          "weaknesses": [
+            "Lack of market share",
+            "Unknown brand"
+          ]
+        }
+      ]
+    }
+  ],
+  "tolerance": 1e-06,
+  "notes": [],
+  "invented_requirements_dropped": []
+}
