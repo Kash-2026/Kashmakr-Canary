@@ -1,0 +1,14 @@
+{
+  "name": "build-a-deterministic-async-fetch-cache-",
+  "version": "1.0.0",
+  "description": "Build a deterministic async fetch cache engine in Python 3.1",
+  "files": [
+    "async_fetch_cache.py",
+    "test_async_fetch_cache.py",
+    "README.md",
+    "index.html",
+    "test_deliverable.py",
+    "requirements.txt"
+  ],
+  "status": "ready"
+}
