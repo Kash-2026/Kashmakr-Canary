@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build a unique selling proposition generator in Python 3.12:</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --accent: #34d399;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+    .preview-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    h1 {
+      margin: 0.75rem 0 0.5rem 0;
+      font-size: 1.6rem;
+      color: #f8fafc;
+      line-height: 1.25;
+    }
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+    .file-tag {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: #93c5fd;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+    .tabs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .tab-btn {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: monospace;
+      font-size: 0.85rem;
+      transition: all 0.15s ease;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+      border-color: #64748b;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 600;
+      border-color: var(--accent);
+    }
+    pre {
+      background: #070a12;
+      border: 1px solid #1e293b;
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      color: #e2e8f0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0;
+      font-family: "JetBrains Mono", Consolas, Menlo, monospace;
+    }
+    .pricing-card-demo {
+      max-width: 400px;
+      margin: 1.5rem auto 0.5rem auto;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .toggle-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .toggle-label.active {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #334155;
+      transition: .3s;
+      border-radius: 26px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #6366f1;
+    }
+    input:checked + .slider:before {
+      transform: translateX(22px);
+    }
+    .discount-badge {
+      background: #10b981;
+      color: #064e3b;
+      font-weight: 700;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 9999px;
+      display: inline-block;
+    }
+    .price-display {
+      margin: 1rem 0;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+    }
+    .currency { font-size: 1.5rem; font-weight: 600; color: #94a3b8; }
+    .amount { font-size: 3rem; font-weight: 800; color: #f8fafc; }
+    .period { font-size: 0.95rem; color: #94a3b8; margin-left: 4px; }
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+      text-align: left;
+    }
+    .feature-list li {
+      padding: 0.4rem 0;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .check { color: #10b981; font-weight: bold; }
+    .cta-btn {
+      width: 100%;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: #4f46e5; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <span class="badge">Python / Backend Microservice</span>
+      <h1>Build a unique selling proposition generator in Python 3.12:</h1>
+      <div class="tags-container">
+        <span class="file-tag">README.md</span><span class="file-tag">requirements.txt</span><span class="file-tag">test_usp_engine.py</span><span class="file-tag">usp_engine.py</span>
+      </div>
+    </div>
+
+    
+
+    <div class="card">
+      <div class="tabs-bar" id="tabs-bar">
+        <button class="tab-btn active" onclick="showFile('README.md')">README.md</button><button class="tab-btn" onclick="showFile('requirements.txt')">requirements.txt</button><button class="tab-btn" onclick="showFile('test_usp_engine.py')">test_usp_engine.py</button><button class="tab-btn" onclick="showFile('usp_engine.py')">usp_engine.py</button>
+      </div>
+      <div id="editor-container">
+        <pre><code id="code-view"># USP Engine
+
+## Overview
+This Python package generates unique selling propositions (USPs) from product features and competitor claims. It filters out duplicates based on semantic token overlap and scores each USP on clarity and distinctiveness.
+
+## Installation</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const FILES = {"usp_engine.py": "import re\nfrom collections import Counter\nimport nltk\nfrom nltk.tokenize import word_tokenize\nfrom nltk.corpus import stopwords\nnltk.download('punkt')\nnltk.download('stopwords')\n\nstop_words = set(stopwords.words('english'))\n\ndef generate_usp(features, competitor_claims):\n    usp_candidates = []\n    for feature in features:\n        for claim in competitor_claims:\n            usp = f\"Our product {feature} unlike {claim}.\"\n            usp_candidates.append(usp)\n    return usp_candidates\n\ndef filter_duplicates(usp_candidates):\n    filtered_usps = []\n    token_counts = Counter()\n    \n    for usp in usp_candidates:\n        tokens = word_tokenize(usp.lower())\n        tokens = [token for token in tokens if token.isalnum() and token not in stop_words]\n        token_counts.update(tokens)\n        \n        if all(token_counts[token] == 1 for token in tokens):\n            filtered_usps.append(usp)\n    \n    return filtered_usps\n\ndef score_usp(usp):\n    words = usp.split()\n    clarity_score = len(words) / (1 + sum(1 for word in words if word in stop_words))\n    distinctiveness_score = sum(1 for word in words if word not in stop_words)\n    return clarity_score, distinctiveness_score\n\ndef generate_and_filter_usps(features, competitor_claims):\n    usp_candidates = generate_usp(features, competitor_claims)\n    filtered_usps = filter_duplicates(usp_candidates)\n    scored_usps = [(usp, score_usp(usp)) for usp in filtered_usps]\n    return scored_usps", "test_usp_engine.py": "```", "README.md": "# USP Engine\n\n## Overview\nThis Python package generates unique selling propositions (USPs) from product features and competitor claims. It filters out duplicates based on semantic token overlap and scores each USP on clarity and distinctiveness.\n\n## Installation", "requirements.txt": "## Usage"};
+
+    function showFile(filename) {
+      const content = FILES[filename] || "";
+      const codeView = document.getElementById("code-view");
+      if (codeView) codeView.textContent = content;
+
+      const buttons = document.querySelectorAll(".tab-btn");
+      buttons.forEach(btn => {
+        if (btn.textContent === filename) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+    }
+
+    const toggle = document.getElementById("billing-toggle");
+    if (toggle) {
+      toggle.addEventListener("change", function() {
+        const isAnnual = this.checked;
+        const amount = document.getElementById("price-amount");
+        const period = document.getElementById("price-period");
+        const mLabel = document.getElementById("monthly-label");
+        const aLabel = document.getElementById("annual-label");
+        if (isAnnual) {
+          if (amount) amount.textContent = "290";
+          if (period) period.textContent = "/year";
+          if (mLabel) mLabel.classList.remove("active");
+          if (aLabel) aLabel.classList.add("active");
+        } else {
+          if (amount) amount.textContent = "29";
+          if (period) period.textContent = "/month";
+          if (mLabel) mLabel.classList.add("active");
+          if (aLabel) aLabel.classList.remove("active");
+        }
+      });
+    }
+  </script>
+</body>
+</html>

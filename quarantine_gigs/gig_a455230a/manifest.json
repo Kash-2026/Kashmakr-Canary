@@ -1,0 +1,13 @@
+{
+  "name": "write-cta-captions.",
+  "version": "1.0.0",
+  "description": "Write CTA captions.",
+  "files": [
+    "report.md",
+    "report.html",
+    "index.html",
+    "requirements.txt",
+    "README.md"
+  ],
+  "status": "ready"
+}
