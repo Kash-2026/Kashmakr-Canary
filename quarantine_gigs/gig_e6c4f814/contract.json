@@ -1,0 +1,15 @@
+{
+  "requires": [],
+  "model": {
+    "calls": {}
+  },
+  "cases_by_fn": {},
+  "cases": [
+    {
+      "rationale": "No financial calculations are required according to the client brief."
+    }
+  ],
+  "tolerance": 1e-06,
+  "notes": [],
+  "invented_requirements_dropped": []
+}

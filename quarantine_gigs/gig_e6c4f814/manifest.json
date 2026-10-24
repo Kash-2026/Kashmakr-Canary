@@ -1,0 +1,7 @@
+{
+  "files": [
+    "scraper.py",
+    "test_scraper.py",
+    "README.md"
+  ]
+}
