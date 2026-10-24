@@ -1,0 +1,11 @@
+{
+  "name": "Bookmark Manager API",
+  "description": "A simple API for managing bookmarks with CRUD operations, tag filtering, and duplicate URL checks.",
+  "version": "1.0.0",
+  "dependencies": [
+    "fastapi",
+    "pydantic",
+    "sqlalchemy",
+    "pytest"
+  ]
+}

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build a bookmark manager REST API with FastAPI and SQLite: f</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --accent: #34d399;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+    .preview-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    h1 {
+      margin: 0.75rem 0 0.5rem 0;
+      font-size: 1.6rem;
+      color: #f8fafc;
+      line-height: 1.25;
+    }
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+    .file-tag {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: #93c5fd;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+    .tabs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .tab-btn {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: monospace;
+      font-size: 0.85rem;
+      transition: all 0.15s ease;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+      border-color: #64748b;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 600;
+      border-color: var(--accent);
+    }
+    pre {
+      background: #070a12;
+      border: 1px solid #1e293b;
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      color: #e2e8f0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0;
+      font-family: "JetBrains Mono", Consolas, Menlo, monospace;
+    }
+    .pricing-card-demo {
+      max-width: 400px;
+      margin: 1.5rem auto 0.5rem auto;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .toggle-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .toggle-label.active {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #334155;
+      transition: .3s;
+      border-radius: 26px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #6366f1;
+    }
+    input:checked + .slider:before {
+      transform: translateX(22px);
+    }
+    .discount-badge {
+      background: #10b981;
+      color: #064e3b;
+      font-weight: 700;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 9999px;
+      display: inline-block;
+    }
+    .price-display {
+      margin: 1rem 0;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+    }
+    .currency { font-size: 1.5rem; font-weight: 600; color: #94a3b8; }
+    .amount { font-size: 3rem; font-weight: 800; color: #f8fafc; }
+    .period { font-size: 0.95rem; color: #94a3b8; margin-left: 4px; }
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+      text-align: left;
+    }
+    .feature-list li {
+      padding: 0.4rem 0;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .check { color: #10b981; font-weight: bold; }
+    .cta-btn {
+      width: 100%;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: #4f46e5; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <span class="badge">Python / Backend Microservice</span>
+      <h1>Build a bookmark manager REST API with FastAPI and SQLite: f</h1>
+      <div class="tags-container">
+        <span class="file-tag">README.md</span><span class="file-tag">database.py</span><span class="file-tag">main.py</span><span class="file-tag">manifest.json</span><span class="file-tag">requirements.txt</span><span class="file-tag">schemas.py</span><span class="file-tag">test_api.py</span>
+      </div>
+    </div>
+
+    
+
+    <div class="card">
+      <div class="tabs-bar" id="tabs-bar">
+        <button class="tab-btn active" onclick="showFile('README.md')">README.md</button><button class="tab-btn" onclick="showFile('database.py')">database.py</button><button class="tab-btn" onclick="showFile('main.py')">main.py</button><button class="tab-btn" onclick="showFile('manifest.json')">manifest.json</button><button class="tab-btn" onclick="showFile('requirements.txt')">requirements.txt</button><button class="tab-btn" onclick="showFile('schemas.py')">schemas.py</button><button class="tab-btn" onclick="showFile('test_api.py')">test_api.py</button>
+      </div>
+      <div id="editor-container">
+        <pre><code id="code-view"># Bookmark Manager API
+
+## Installation
+
+1. Clone the repository
+2. Install dependencies with `pip install -r requirements.txt`
+
+## Running the API
+
+1. Start the API with `uvicorn main:app --reload`
+2. Access the API at `http://localhost:8000`
+
+## Running Tests
+
+1. Run tests with `pytest test_api.py`</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const FILES = {"main.py": "from fastapi import FastAPI, HTTPException, Depends\nfrom sqlalchemy.orm import Session\nfrom database import SessionLocal, engine\nfrom schemas import Bookmark, BookmarkCreate, BookmarkUpdate\nfrom models import Bookmark as DBBookmark\nimport crud\n\napp = FastAPI()\n\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\n\n@app.post(\"/bookmarks/\", response_model=Bookmark)\ndef create_bookmark(bookmark: BookmarkCreate, db: Session = Depends(get_db)):\n    db_bookmark = crud.get_bookmark_by_url(db, url=bookmark.url)\n    if db_bookmark:\n        raise HTTPException(status_code=409, detail=\"URL already exists\")\n    return crud.create_bookmark(db=db, bookmark=bookmark)\n\n@app.get(\"/bookmarks/\", response_model=list[Bookmark])\ndef read_bookmarks(skip: int = 0, limit: int = 10, tag: str = None, db: Session = Depends(get_db)):\n    bookmarks = crud.get_bookmarks(db, skip=skip, limit=limit, tag=tag)\n    return bookmarks\n\n@app.get(\"/bookmarks/{bookmark_id}\", response_model=Bookmark)\ndef read_bookmark(bookmark_id: int, db: Session = Depends(get_db)):\n    db_bookmark = crud.get_bookmark(db, bookmark_id=bookmark_id)\n    if db_bookmark is None:\n        raise HTTPException(status_code=404, detail=\"Bookmark not found\")\n    return db_bookmark\n\n@app.put(\"/bookmarks/{bookmark_id}\", response_model=Bookmark)\ndef update_bookmark(bookmark_id: int, bookmark: BookmarkUpdate, db: Session = Depends(get_db)):\n    db_bookmark = crud.update_bookmark(db, bookmark_id=bookmark_id, bookmark=bookmark)\n    if db_bookmark is None:\n        raise HTTPException(status_code=404, detail=\"Bookmark not found\")\n    return db_bookmark\n\n@app.delete(\"/bookmarks/{bookmark_id}\", response_model=Bookmark)\ndef delete_bookmark(bookmark_id: int, db: Session = Depends(get_db)):\n    db_bookmark = crud.delete_bookmark(db, bookmark_id=bookmark_id)\n    if db_bookmark is None:\n        raise HTTPException(status_code=404, detail=\"Bookmark not found\")\n    return db_bookmark", "database.py": "from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey\nfrom sqlalchemy.ext.declarative import declarative_base\nfrom sqlalchemy.orm import sessionmaker, relationship\n\nSQLALCHEMY_DATABASE_URL = \"sqlite:///./test.db\"\n\nengine = create_engine(SQLALCHEMY_DATABASE_URL)\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\nBase = declarative_base()\n\nclass Bookmark(Base):\n    __tablename__ = \"bookmarks\"\n    id = Column(Integer, primary_key=True, index=True)\n    url = Column(String, unique=True, index=True)\n    title = Column(String, index=True)\n    tags = Column(String)\n    created_at = Column(DateTime)\n\nBase.metadata.create_all(bind=engine)", "schemas.py": "from pydantic import BaseModel\nfrom typing import Optional, List\n\nclass BookmarkBase(BaseModel):\n    url: str\n    title: str\n    tags: Optional[List[str]] = None\n\nclass BookmarkCreate(BookmarkBase):\n    pass\n\nclass BookmarkUpdate(BookmarkBase):\n    pass\n\nclass Bookmark(BookmarkBase):\n    id: int\n    created_at: str\n\n    class Config:\n        orm_mode = True", "test_api.py": "from fastapi.testclient import TestClient\nfrom sqlalchemy import create_engine\nfrom sqlalchemy.orm import sessionmaker\nfrom database import Base, get_db\nfrom main import app, BookmarkCreate, BookmarkUpdate\nfrom models import Bookmark as DBBookmark\n\nSQLALCHEMY_DATABASE_URL = \"sqlite:///./test_api.db\"\nengine = create_engine(SQLALCHEMY_DATABASE_URL)\nTestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\n\nBase.metadata.create_all(bind=engine)\n\ndef override_get_db():\n    try:\n        db = TestingSessionLocal()\n        yield db\n    finally:\n        db.close()\n\napp.dependency_overrides[get_db] = override_get_db\n\nclient = TestClient(app)\n\ndef test_create_bookmark():\n    response = client.post(\n        \"/bookmarks/\", \n        json={\"url\": \"http://example.com\", \"title\": \"Example\", \"tags\": [\"example\"]}\n    )\n    assert response.status_code == 200\n    data = response.json()\n    assert data[\"url\"] == \"http://example.com\"\n    assert data[\"title\"] == \"Example\"\n    assert \"id\" in data\n\ndef test_create_duplicate_bookmark():\n    response = client.post(\n        \"/bookmarks/\", \n        json={\"url\": \"http://example.com\", \"title\": \"Example\", \"tags\": [\"example\"]}\n    )\n    assert response.status_code == 409\n\ndef test_read_bookmarks():\n    response = client.get(\"/bookmarks/\")\n    assert response.status_code == 200\n    data = response.json()\n    assert isinstance(data, list)\n\ndef test_update_bookmark():\n    response = client.put(\n        \"/bookmarks/1\", \n        json={\"url\": \"http://updated.com\", \"title\": \"Updated\", \"tags\": [\"updated\"]}\n    )\n    assert response.status_code == 200\n    data = response.json()\n    assert data[\"url\"] == \"http://updated.com\"\n    assert data[\"title\"] == \"Updated\"\n\ndef test_delete_bookmark():\n    response = client.delete(\"/bookmarks/1\")\n    assert response.status_code == 200\n    data = response.json()\n    assert data[\"url\"] == \"http://updated.com\"\n    assert data[\"title\"] == \"Updated\"", "requirements.txt": "fastapi\npydantic\nsqlalchemy\npytest", "README.md": "# Bookmark Manager API\n\n## Installation\n\n1. Clone the repository\n2. Install dependencies with `pip install -r requirements.txt`\n\n## Running the API\n\n1. Start the API with `uvicorn main:app --reload`\n2. Access the API at `http://localhost:8000`\n\n## Running Tests\n\n1. Run tests with `pytest test_api.py`", "manifest.json": "{\n  \"name\": \"Bookmark Manager API\",\n  \"description\": \"A simple API for managing bookmarks with CRUD operations, tag filtering, and duplicate URL checks.\",\n  \"version\": \"1.0.0\",\n  \"dependencies\": [\n    \"fastapi\",\n    \"pydantic\",\n    \"sqlalchemy\",\n    \"pytest\"\n  ]\n}"};
+
+    function showFile(filename) {
+      const content = FILES[filename] || "";
+      const codeView = document.getElementById("code-view");
+      if (codeView) codeView.textContent = content;
+
+      const buttons = document.querySelectorAll(".tab-btn");
+      buttons.forEach(btn => {
+        if (btn.textContent === filename) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+    }
+
+    const toggle = document.getElementById("billing-toggle");
+    if (toggle) {
+      toggle.addEventListener("change", function() {
+        const isAnnual = this.checked;
+        const amount = document.getElementById("price-amount");
+        const period = document.getElementById("price-period");
+        const mLabel = document.getElementById("monthly-label");
+        const aLabel = document.getElementById("annual-label");
+        if (isAnnual) {
+          if (amount) amount.textContent = "290";
+          if (period) period.textContent = "/year";
+          if (mLabel) mLabel.classList.remove("active");
+          if (aLabel) aLabel.classList.add("active");
+        } else {
+          if (amount) amount.textContent = "29";
+          if (period) period.textContent = "/month";
+          if (mLabel) mLabel.classList.add("active");
+          if (aLabel) aLabel.classList.remove("active");
+        }
+      });
+    }
+  </script>
+</body>
+</html>
