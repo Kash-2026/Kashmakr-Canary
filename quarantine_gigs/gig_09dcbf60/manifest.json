@@ -1,0 +1,14 @@
+{
+  "name": "design-an-interactive-bond-price-&-yield",
+  "version": "1.0.0",
+  "description": "Design an interactive Bond Price & Yield to Maturity calcula",
+  "files": [
+    "index.html",
+    "index.js",
+    "model.py",
+    "test_deliverable.py",
+    "requirements.txt",
+    "README.md"
+  ],
+  "status": "ready"
+}

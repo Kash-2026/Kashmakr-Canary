@@ -1,0 +1,62 @@
+{
+  "requires": [
+    "calculate_bond_price",
+    "calculate_ytm"
+  ],
+  "model": {
+    "calls": {
+      "calculate_bond_price": "calculate_bond_price",
+      "calculate_ytm": "calculate_ytm"
+    }
+  },
+  "cases_by_fn": {
+    "calculate_bond_price": [],
+    "calculate_ytm": []
+  },
+  "cases": [
+    {
+      "data": {
+        "faceValue": 1000,
+        "couponRate": 5,
+        "yearsToMaturity": 10,
+        "marketRate": 5
+      }
+    },
+    {
+      "data": {
+        "faceValue": 1000,
+        "couponRate": 7,
+        "yearsToMaturity": 5,
+        "marketRate": 6
+      }
+    },
+    {
+      "data": {
+        "faceValue": 1000,
+        "couponRate": 3,
+        "yearsToMaturity": 20,
+        "marketRate": 4
+      }
+    },
+    {
+      "data": {
+        "faceValue": 500,
+        "couponRate": 0,
+        "yearsToMaturity": 15,
+        "marketRate": 3
+      }
+    }
+  ],
+  "tolerance": 1e-06,
+  "notes": [
+    "calculate_bond_price: case tagged for 'data', not this mapping",
+    "calculate_bond_price: case tagged for 'data', not this mapping",
+    "calculate_bond_price: case tagged for 'data', not this mapping",
+    "calculate_bond_price: case tagged for 'data', not this mapping",
+    "calculate_ytm: case tagged for 'data', not this mapping",
+    "calculate_ytm: case tagged for 'data', not this mapping",
+    "calculate_ytm: case tagged for 'data', not this mapping",
+    "calculate_ytm: case tagged for 'data', not this mapping"
+  ],
+  "invented_requirements_dropped": []
+}
