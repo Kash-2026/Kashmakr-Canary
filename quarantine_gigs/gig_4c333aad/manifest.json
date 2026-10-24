@@ -1,0 +1,13 @@
+{
+  "name": "create-story-ideas.",
+  "version": "1.0.0",
+  "description": "Create Story ideas.",
+  "files": [
+    "report.md",
+    "report.html",
+    "index.html",
+    "requirements.txt",
+    "README.md"
+  ],
+  "status": "ready"
+}
