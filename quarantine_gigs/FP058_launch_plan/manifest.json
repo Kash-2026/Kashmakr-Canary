@@ -1,0 +1,14 @@
+{
+  "name": "build-a-product-launch-plan-engine-in-py",
+  "version": "1.0.0",
+  "description": "Build a product launch plan engine in Python 3.12: builds a",
+  "files": [
+    "launch_plan_engine.py",
+    "test_launch_plan_engine.py",
+    "README.md",
+    "index.html",
+    "test_deliverable.py",
+    "requirements.txt"
+  ],
+  "status": "ready"
+}
