@@ -1,0 +1,14 @@
+{
+  "name": "build-a-ai-workflow-and-automation-engin",
+  "version": "1.0.0",
+  "description": "Build a ai workflow and automation engine in Python 3.12: va",
+  "files": [
+    "ai_workflow_engine.py",
+    "test_ai_workflow_engine.py",
+    "README.md",
+    "index.html",
+    "test_deliverable.py",
+    "requirements.txt"
+  ],
+  "status": "ready"
+}
