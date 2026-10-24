@@ -1,0 +1,20 @@
+{
+  "requires": [],
+  "model": {
+    "calls": {}
+  },
+  "cases_by_fn": {},
+  "cases": [
+    {
+      "text": "This is a sample text for SEO optimization.",
+      "target_keyword": "SEO optimization"
+    },
+    {
+      "text": "Another example text that needs optimization.",
+      "target_keyword": "optimization"
+    }
+  ],
+  "tolerance": 1e-06,
+  "notes": [],
+  "invented_requirements_dropped": []
+}
