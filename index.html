@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kashmakr AI — Empower & Earn Your Destiny</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & BASE DESIGN SYSTEM — NEON PURPLE & GOLDEN DARK THEME
+   ============================================================ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Allow text input for form */
+input, textarea {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+
+/* Prevent image dragging */
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+/* Print Protection: Blank page for printing or PDF export */
+@media print {
+  html, body {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
+
+/* DevTools Security Shield & Blur */
+body.devtools-shield-active {
+  filter: blur(25px) grayscale(90%) !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+#devtoolsWarning {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: rgba(8, 3, 18, 0.95);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px 24px;
+  color: #ffffff;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  pointer-events: auto;
+}
+
+#devtoolsWarning.active {
+  display: flex !important;
+}
+
+#devtoolsWarning h2 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: #FF149C;
+  text-shadow: 0 0 16px rgba(255, 20, 156, 0.5);
+  margin-bottom: 12px;
+}
+
+#devtoolsWarning p {
+  font-size: 1rem;
+  color: rgba(232, 224, 245, 0.85);
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(160deg, #1a0a2e 0%, #0f0620 40%, #080312 100%);
+  color: #e8e0f5;
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #080312;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #B026FF, #FFD700);
+  border-radius: 5px;
+}
+
+/* ============================================================
+   TYPOGRAPHY & METALLIC SHADING ACCENTS
+   ============================================================ */
+.gold-text {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 40%, #FFD700 70%, #FFEC80 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.4));
+}
+
+.pink-text {
+  color: #FF149C;
+  text-shadow: 0 0 14px rgba(255, 20, 156, 0.45);
+}
+
+.purple-text {
+  background: linear-gradient(135deg, #C840FF 0%, #B026FF 50%, #7C3AED 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 10px rgba(176, 38, 255, 0.5));
+}
+
+/* 3D Silver Monogram Shine & Shading Effect */
+.silver-monogram-text {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  background: linear-gradient(
+    115deg,
+    #FFFFFF 0%,
+    #F1F5F9 18%,
+    #94A3B8 32%,
+    #FFFFFF 48%,
+    #F8FAFC 55%,
+    #64748B 72%,
+    #CBD5E1 88%,
+    #FFFFFF 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 10px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 16px rgba(176, 38, 255, 0.5));
+  animation: silverShimmer 4s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes silverShimmer {
+  0% { background-position: -200% 0; }
+  50% { background-position: 200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.silver-shine-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.silver-shine-badge::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -120%;
+  width: 60%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 20%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(255, 255, 255, 0.1) 80%,
+    transparent 100%
+  );
+  transform: skewX(-22deg);
+  animation: shinePass 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shinePass {
+  0% { left: -120%; opacity: 0; }
+  20% { opacity: 1; }
+  55% { left: 160%; opacity: 1; }
+  100% { left: 160%; opacity: 0; }
+}
+
+/* ============================================================
+   NAVIGATION — GOLDEN NEUMORPHIC ON DARK PURPLE
+   ============================================================ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  padding: 14px 32px;
+  background: rgba(26, 10, 46, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.18);
+  transition: all 0.3s ease;
+}
+
+.nav.scrolled {
+  background: rgba(26, 10, 46, 0.96);
+  border-bottom-color: rgba(255, 215, 0, 0.35);
+  box-shadow: 0 4px 30px rgba(176, 38, 255, 0.25), 0 0 15px rgba(255, 215, 0, 0.15);
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+
+/* 3D Silver Logo Badge with Golden Neumorphic Frame */
+.logo-wrap {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #FFD700, #E6B800, #FFA500);
+  box-shadow:
+    0 4px 16px rgba(255, 215, 0, 0.4),
+    0 2px 6px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+  padding: 4px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo-wrap:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow:
+    0 8px 28px rgba(255, 215, 0, 0.6),
+    0 4px 8px rgba(0, 0, 0, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+}
+
+.nav-name-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.nav-name {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.nav-ai {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #C840FF, #A020F0);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 7px;
+  vertical-align: super;
+  letter-spacing: 0.08em;
+  box-shadow: 0 3px 14px rgba(176, 38, 255, 0.55);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Nav Links & Buttons */
+.nav-links {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.nav-link {
+  padding: 8px 16px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: rgba(232, 224, 245, 0.75);
+  text-decoration: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.25s ease;
+}
+
+.nav-link:hover {
+  color: #FFD700;
+  background: rgba(255, 215, 0, 0.1);
+  border-color: rgba(255, 215, 0, 0.25);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.15);
+}
+
+.nav-cta {
+  padding: 10px 22px;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #1a0a2e;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow:
+    0 4px 14px rgba(255, 215, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 0.25s ease;
+}
+
+.nav-cta:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 24px rgba(255, 215, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero {
+  padding: 130px 24px 32px;
+  text-align: center;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #FFD700;
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 999px;
+  margin-bottom: 22px;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+}
+
+.hero-badge .dot {
+  width: 8px;
+  height: 8px;
+  background: #4ade80;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #4ade80;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.3); }
+}
+
+.hero h1 {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(2.3rem, 5vw, 3.8rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin-bottom: 18px;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-desc {
+  font-size: 1.08rem;
+  color: rgba(232, 224, 245, 0.75);
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* HERO BRIEF-EXECUTION-DELIVERY SLOGAN BANNER */
+.hero-slogan-wrap {
+  margin-top: 12px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.slogan-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 24px;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  background: rgba(26, 10, 46, 0.75);
+  border: 1.5px solid rgba(255, 215, 0, 0.45);
+  border-radius: 999px;
+  box-shadow: 
+    0 6px 25px rgba(176, 38, 255, 0.3),
+    0 0 20px rgba(255, 215, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.slogan-pill:hover {
+  transform: scale(1.03) translateY(-1px);
+  box-shadow: 
+    0 8px 30px rgba(176, 38, 255, 0.4),
+    0 0 25px rgba(255, 215, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.slogan-punchline {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: rgba(232, 224, 245, 0.95);
+  max-width: 620px;
+  line-height: 1.6;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   SKY HERO BOX — NEON PURPLE & GOLD GLOW WITH REALISTIC NIGHT SKY
+   ============================================================ */
+.sky-section {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+.sky-box {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: linear-gradient(155deg, #1E0B33 0%, #120720 58%, #05030A 100%);
+  border: 2px solid rgba(255, 215, 0, 0.45);
+  box-shadow:
+    0 0 40px rgba(176, 38, 255, 0.35),
+    0 0 80px rgba(176, 38, 255, 0.2),
+    0 0 120px rgba(255, 215, 0, 0.15),
+    inset 0 0 60px rgba(176, 38, 255, 0.12),
+    0 20px 60px rgba(0, 0, 0, 0.75);
+  animation: boxGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes boxGlow {
+  0% {
+    box-shadow:
+      0 0 40px rgba(176, 38, 255, 0.35),
+      0 0 80px rgba(176, 38, 255, 0.2),
+      0 0 120px rgba(255, 215, 0, 0.15),
+      inset 0 0 60px rgba(176, 38, 255, 0.12),
+      0 20px 60px rgba(0, 0, 0, 0.75);
+    border-color: rgba(255, 215, 0, 0.45);
+  }
+  100% {
+    box-shadow:
+      0 0 60px rgba(176, 38, 255, 0.5),
+      0 0 110px rgba(176, 38, 255, 0.3),
+      0 0 150px rgba(255, 215, 0, 0.22),
+      inset 0 0 80px rgba(176, 38, 255, 0.18),
+      0 20px 60px rgba(0, 0, 0, 0.85);
+    border-color: rgba(255, 215, 0, 0.75);
+  }
+}
+
+/* UNIFIED SINGLE CANVAS UNFILTERED OVERLAY */
+#skyCanvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  display: block;
+}
+
+.sky-center {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 28px 32px;
+  gap: 20px;
+  pointer-events: auto;
+}
+
+.sky-brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* 3D Silver Logo Monogram Emblem inside Sky Box */
+.sky-logo-badge {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #FFD700, #E6B800, #FFA500);
+  box-shadow:
+    0 6px 20px rgba(255, 215, 0, 0.5),
+    0 2px 6px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+}
+
+.sky-brand-main {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(2.5rem, 5.5vw, 3.8rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.sky-brand-ai {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 800;
+  color: #C840FF;
+  vertical-align: super;
+  text-shadow: 0 0 18px rgba(200, 64, 255, 0.7);
+}
+
+.sky-tagline {
+  font-size: clamp(0.92rem, 1.4vw, 1.1rem);
+  color: rgba(230, 215, 255, 0.85);
+  line-height: 1.6;
+  max-width: 440px;
+}
+
+.sky-tagline em {
+  font-style: normal;
+  color: #FFD700;
+  font-weight: 700;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+}
+
+/* Golden Neumorphic Waitlist Form */
+.waitlist-form-wrap {
+  width: 100%;
+  max-width: 420px;
+}
+
+.waitlist-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.form-inputs-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.waitlist-form input {
+  flex: 1;
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: rgba(248, 243, 255, 0.95);
+  background: rgba(30, 11, 51, 0.65);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.waitlist-form input::placeholder {
+  color: rgba(180, 165, 210, 0.5);
+}
+
+.waitlist-form input:focus {
+  border-color: rgba(255, 215, 0, 0.6);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.25), inset 0 0 10px rgba(176, 38, 255, 0.15);
+}
+
+.submit-btn {
+  padding: 13px 28px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #1a0a2e;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow:
+    0 4px 16px rgba(255, 215, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 26px rgba(255, 215, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.submit-btn:active {
+  transform: translateY(1px);
+  box-shadow: inset 2px 2px 5px rgba(180, 120, 0, 0.4);
+}
+
+.submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Toast Message */
+.toast-msg {
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: none;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.toast-msg.success {
+  display: block;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #4ADE80;
+}
+
+.toast-msg.error {
+  display: block;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #F87171;
+}
+
+.sky-caption {
+  position: absolute;
+  left: 24px;
+  bottom: 20px;
+  z-index: 10;
+  text-align: left;
+  pointer-events: none;
+}
+
+.sky-caption-kicker {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 215, 0, 0.85);
+  margin-bottom: 4px;
+}
+
+.sky-caption-sub {
+  font-size: 0.78rem;
+  color: rgba(230, 215, 255, 0.45);
+  max-width: 260px;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   FEATURES SECTION — NEUMORPHIC CARDS WITH NEON PURPLE GLOW
+   ============================================================ */
+.features {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px 70px;
+}
+
+.section-tag {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.section-tag span {
+  display: inline-block;
+  padding: 5px 14px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #B026FF;
+  background: rgba(176, 38, 255, 0.1);
+  border: 1px solid rgba(176, 38, 255, 0.25);
+  border-radius: 999px;
+  box-shadow: 0 0 12px rgba(176, 38, 255, 0.2);
+}
+
+.section-title {
+  text-align: center;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 44px;
+  color: #ffffff;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 28px;
+  transition: all 0.35s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.feature-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 215, 0, 0.3);
+  box-shadow: 0 10px 35px rgba(176, 38, 255, 0.2), 0 0 15px rgba(255, 215, 0, 0.1);
+}
+
+.feature-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(176, 38, 255, 0.12));
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  margin-bottom: 18px;
+  font-size: 1.35rem;
+}
+
+.feature-card h3 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.feature-card p {
+  font-size: 0.88rem;
+  color: rgba(232, 224, 245, 0.65);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   HOW IT WORKS
+   ============================================================ */
+.how {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px 70px;
+  text-align: center;
+}
+
+.how-steps {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.how-step {
+  flex: 1;
+  min-width: 220px;
+  max-width: 280px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 28px 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+}
+
+.how-step.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #1a0a2e;
+  font-weight: 900;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(255, 215, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.how-step h4 {
+  font-size: 1.02rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.how-step p {
+  font-size: 0.86rem;
+  color: rgba(232, 224, 245, 0.6);
+  line-height: 1.55;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  text-align: center;
+  padding: 28px 24px;
+  font-size: 0.8rem;
+  color: rgba(232, 224, 245, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.footer a {
+  color: #B026FF;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   RESPONSIVE DESIGN
+   ============================================================ */
+@media(max-width: 768px) {
+  .nav-links { display: none; }
+  .nav { padding: 12px 16px; }
+  .hero { padding: 110px 16px 24px; }
+  .sky-box { height: 480px; border-radius: 20px; }
+  .sky-center { padding: 20px 16px; gap: 16px; }
+  .form-inputs-row { flex-direction: column; }
+  .submit-btn { width: 100%; }
+  .features-grid { grid-template-columns: 1fr; }
+  .how-steps { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- DEVTOOLS SECURITY SHIELD WARNING OVERLAY -->
+<div id="devtoolsWarning">
+  <div class="logo-wrap silver-shine-badge" style="width:72px;height:72px;margin-bottom:18px;">
+    <img src="silver_cat_dog_3d.png" alt="Kashmakr Security Shield" class="logo-img" />
+  </div>
+  <h2>Security Protection Active</h2>
+  <p>Developer tools inspection and source code access are restricted on this application. Please close Developer Tools to continue.</p>
+</div>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">
+      <div class="logo-wrap silver-shine-badge">
+        <img src="silver_cat_dog_3d.png" alt="Kashmakr AI 3D Silver Monogram" class="logo-img" />
+      </div>
+      <div class="nav-name-wrap">
+        <span class="nav-name silver-monogram-text">Kashmakr</span>
+        <span class="nav-ai">AI</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#how" class="nav-link">How It Works</a>
+      <a href="#waitlist" class="nav-link">Waitlist</a>
+    </div>
+    <a href="#waitlist" class="nav-cta silver-shine-badge">Join Waitlist</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span> Autonomous Execution Engine</div>
+
+  <div class="hero-slogan-wrap">
+    <div class="slogan-pill silver-shine-badge">
+      ⚡ <span class="gold-text">Brief</span> • <span class="purple-text">Execution</span> • <span class="silver-monogram-text">Delivery</span>
+    </div>
+    <h1><span class="pink-text">Kashmakr AI earns for U</span> <span style="color: #ffffff;">while</span> other apps just drain what you earn.</h1>
+    <p class="hero-desc">
+      Turn your vision into production reality with <span class="purple-text">10x speed &amp; autonomous revenue.</span>
+    </p>
+  </div>
+</section>
+
+<!-- HERO SKY BOX (UNIFIED SINGLE CANVAS: NIGHT SKY + TWINKLING STARS + SHOOTING STAR + FALLING SNOW) -->
+<section class="sky-section" id="waitlist">
+  <div class="sky-box" id="skyBox">
+    <canvas id="skyCanvas"></canvas>
+
+    <div class="sky-center">
+      <div class="sky-brand-wrap">
+        <div class="sky-logo-badge silver-shine-badge">
+          <img src="silver_cat_dog_3d.png" alt="Kashmakr 3D Silver Monogram" class="logo-img" />
+        </div>
+        <div>
+          <span class="sky-brand-main silver-monogram-text">Kashmakr</span>
+          <span class="sky-brand-ai">AI</span>
+        </div>
+      </div>
+
+      <p class="sky-tagline">
+        <em>Empower &amp; Thrive!</em><br>
+        <span class="pink-text">Kashmakr AI earns for U while</span> other apps just drain what you earn.
+      </p>
+
+      <div class="waitlist-form-wrap">
+        <form class="waitlist-form" id="waitlistForm" onsubmit="return handleSubmit(event)">
+          <div class="form-inputs-row">
+            <input type="text" id="nameInput" placeholder="Your name" autocomplete="name" required />
+            <input type="email" id="emailInput" placeholder="you@email.com" autocomplete="email" required />
+          </div>
+          <button type="submit" id="submitBtn" class="submit-btn silver-shine-badge">Join Waitlist</button>
+        </form>
+        <div id="toastMsg" class="toast-msg"></div>
+      </div>
+    </div>
+
+    <div class="sky-caption">
+      <p class="sky-caption-kicker">Kashmakr — Autonomous Engine</p>
+      <p class="sky-caption-sub">Ship faster. Deliver autonomously.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-tag"><span>Capabilities</span></div>
+  <h2 class="section-title">Everything you need to<br><span class="purple-text">ship autonomously</span></h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Autonomous Execution</h3>
+      <p>Set objectives, not instructions. Kashmakr plans, executes, and delivers without hand-holding.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧩</div>
+      <h3>Multi-Modal Output</h3>
+      <p>Code, documents, designs, deployments — generate any deliverable format autonomously.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔄</div>
+      <h3>Continuous Iteration</h3>
+      <p>Self-correcting loops ensure quality. The agent iterates until production standards are met.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <h3>500+ Integrations</h3>
+      <p>Connect to any API, service, or tool. Orchestrate complex multi-system workflows.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <h2 class="section-title">How It Works</h2>
+  <div class="how-steps">
+    <div class="how-step">
+      <div class="step-num">1</div>
+      <h4>Define Your Goal</h4>
+      <p>Tell Kashmakr what you need built, deployed, or delivered — in plain language.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">2</div>
+      <h4>Autonomous Execution</h4>
+      <p>The agent plans, codes, tests, and iterates — running complex workflows end-to-end.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">3</div>
+      <h4>Deliver & Scale</h4>
+      <p>Production-ready output delivered to your stack. Scale with confidence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>&copy; 2026 Kashmakr AI. All rights reserved. &nbsp;|&nbsp; <a href="mailto:hello@kashmakr.ai">Contact</a></p>
+</footer>
+
+<!-- UNIFIED SINGLE CANVAS REALISTIC ENGINE & WAITLIST API SCRIPT -->
+<script>
+// ===========================================================
+//  NAV SCROLL INTERACTION
+// ===========================================================
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// ===========================================================
+//  SCROLL ANIMATION OBSERVER
+// ===========================================================
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.feature-card, .how-step').forEach(el => obs.observe(el));
+
+// ===========================================================
+//  UNIFIED NIGHT SKY & NATURAL CANVAS ENGINE (BULLETPROOF 1:1 RESOLUTION)
+// ===========================================================
+const box = document.getElementById('skyBox');
+const canvas = document.getElementById('skyCanvas');
+const ctx = canvas.getContext('2d');
+
+let W = 960, H = 520;
+
+function resizeCanvas() {
+  const rect = box.getBoundingClientRect();
+  W = Math.max(300, Math.floor(rect.width || box.clientWidth || 960));
+  H = Math.max(300, Math.floor(rect.height || box.clientHeight || 520));
+
+  canvas.width = W;
+  canvas.height = H;
+
+  buildStars();
+  buildSnowFlakes();
+  if (!shooter) spawnShooter();
+}
+
+// -----------------------------------------------------------
+//  1. TWINKLING STARS DATA
+// -----------------------------------------------------------
+let stars = [];
+function buildStars() {
+  const count = Math.max(75, Math.floor((W * H) / 1600));
+  stars = [];
+  for (let i = 0; i < count; i++) {
+    stars.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: 0.6 + Math.random() * 2.2,
+      baseAlpha: 0.3 + Math.random() * 0.7,
+      speed: 0.8 + Math.random() * 2.2,
+      phase: Math.random() * Math.PI * 2,
+      goldGlow: Math.random() < 0.25,
+      purpleGlow: Math.random() < 0.2,
+      hasSpike: Math.random() < 0.12
+    });
+  }
+}
+
+function renderStars(sec) {
+  for (const s of stars) {
+    const tw = 0.35 + 0.65 * Math.sin(sec * s.speed + s.phase);
+    const alpha = Math.min(1, Math.max(0.08, s.baseAlpha * tw));
+
+    // Outer Glow
+    if (s.goldGlow || s.purpleGlow) {
+      const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 7);
+      if (s.goldGlow) {
+        g.addColorStop(0, `rgba(255, 215, 0, ${alpha * 0.5})`);
+      } else {
+        g.addColorStop(0, `rgba(200, 64, 255, ${alpha * 0.45})`);
+      }
+      g.addColorStop(1, 'transparent');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r * 7, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Core Star Point
+    ctx.fillStyle = s.purpleGlow ? `rgba(235, 215, 255, ${alpha})` : (s.goldGlow ? `rgba(255, 245, 210, ${alpha})` : `rgba(255, 255, 255, ${alpha})`);
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 4-Point Cross Spike
+    if (s.hasSpike && alpha > 0.45) {
+      ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.6})`;
+      ctx.lineWidth = 0.8;
+      const len = s.r * 4.5;
+      ctx.beginPath();
+      ctx.moveTo(s.x - len, s.y); ctx.lineTo(s.x + len, s.y);
+      ctx.moveTo(s.x, s.y - len); ctx.lineTo(s.x, s.y + len);
+      ctx.stroke();
+    }
+  }
+}
+
+// -----------------------------------------------------------
+//  2. REALISTIC SHOOTING STARS (LEFT TO RIGHT ACROSS SKY)
+// -----------------------------------------------------------
+let shooter = null;
+let nextShotTime = 0;
+
+function spawnShooter() {
+  shooter = {
+    x: -60,
+    y: Math.random() * (H * 0.45),
+    vx: 10 + Math.random() * 8,
+    vy: 2.5 + Math.random() * 3.5,
+    life: 1.0,
+    decay: 0.008 + Math.random() * 0.005,
+    sz: 2.4 + Math.random() * 2,
+    trail: [],
+    maxTrailLen: 40,
+    isGold: Math.random() < 0.5
+  };
+}
+
+function renderShootingStar(timeMs) {
+  if (!shooter && timeMs > nextShotTime) {
+    spawnShooter();
+  }
+  if (!shooter) return;
+
+  const s = shooter;
+  s.x += s.vx;
+  s.y += s.vy;
+  s.life -= s.decay;
+  s.trail.unshift({ x: s.x, y: s.y, life: s.life });
+  if (s.trail.length > s.maxTrailLen) s.trail.pop();
+
+  if (s.life <= 0 || s.x > W + 120 || s.y > H + 120) {
+    shooter = null;
+    nextShotTime = timeMs + 1800 + Math.random() * 3500;
+    return;
+  }
+
+  // Draw Trail
+  for (let i = 0; i < s.trail.length; i++) {
+    const p = s.trail[i];
+    const factor = 1 - i / s.trail.length;
+    const alpha = Math.max(0, factor * 0.85 * p.life);
+    const w = Math.max(0.5, s.sz * factor);
+
+    ctx.beginPath();
+    ctx.fillStyle = s.isGold ? `rgba(255, 215, 0, ${alpha})` : `rgba(215, 180, 255, ${alpha})`;
+    ctx.arc(p.x, p.y, w, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Glowing Head
+  const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, 35);
+  g.addColorStop(0, `rgba(255, 255, 255, ${s.life})`);
+  g.addColorStop(0.3, s.isGold ? `rgba(255, 215, 0, ${s.life * 0.9})` : `rgba(200, 64, 255, ${s.life * 0.9})`);
+  g.addColorStop(0.75, `rgba(255, 255, 255, ${s.life * 0.25})`);
+  g.addColorStop(1, 'transparent');
+
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(s.x, s.y, 35, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Core Spot
+  ctx.fillStyle = `rgba(255, 255, 255, ${s.life})`;
+  ctx.beginPath();
+  ctx.arc(s.x, s.y, 3.5, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+// -----------------------------------------------------------
+//  3. REALISTIC FALLING SNOW ENGINE (MAIN ATTRACTION)
+// -----------------------------------------------------------
+let flakes = [];
+
+function buildSnowFlakes() {
+  const count = Math.max(80, Math.floor(W / 6));
+  flakes = [];
+  for (let i = 0; i < count; i++) {
+    flakes.push(createFlake(true));
+  }
+}
+
+function createFlake(initial = false) {
+  const depth = Math.random();
+  return {
+    x: Math.random() * W,
+    y: initial ? Math.random() * H : -15,
+    sz: 1.2 + depth * 3.5,
+    speedY: 0.4 + depth * 1.5,
+    swayFreq: 0.005 + Math.random() * 0.015,
+    swayPhase: Math.random() * Math.PI * 2,
+    rot: Math.random() * Math.PI * 2,
+    rotSpeed: (Math.random() - 0.5) * 0.02,
+    opacity: 0.35 + depth * 0.6,
+    isCrystal: depth > 0.45 && Math.random() < 0.4
+  };
+}
+
+function drawCrystalFlake(ctx, p) {
+  ctx.save();
+  ctx.translate(p.x, p.y);
+  ctx.rotate(p.rot);
+  ctx.strokeStyle = `rgba(240, 235, 255, ${p.opacity})`;
+  ctx.lineWidth = Math.max(0.6, p.sz * 0.22);
+
+  for (let i = 0; i < 6; i++) {
+    const ang = (Math.PI * 2 * i) / 6;
+    const ex = Math.cos(ang) * p.sz * 2.8, ey = Math.sin(ang) * p.sz * 2.8;
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(ex, ey); ctx.stroke();
+
+    const bx = Math.cos(ang) * p.sz * 1.4, by = Math.sin(ang) * p.sz * 1.4;
+    const pp = ang + Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(bx, by);
+    ctx.lineTo(bx + Math.cos(pp) * p.sz * 0.7, by + Math.sin(pp) * p.sz * 0.7);
+    ctx.moveTo(bx, by);
+    ctx.lineTo(bx - Math.cos(pp) * p.sz * 0.7, by - Math.sin(pp) * p.sz * 0.7);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function renderSnow(sec) {
+  for (let i = 0; i < flakes.length; i++) {
+    const p = flakes[i];
+    p.y += p.speedY;
+    p.rot += p.rotSpeed;
+    p.x += Math.sin(sec * p.swayFreq * 1000 + p.swayPhase) * 0.38;
+
+    if (p.y > H + 20) {
+      flakes[i] = createFlake(false);
+      continue;
+    }
+    if (p.x < -30) p.x = W + 30;
+    if (p.x > W + 30) p.x = -30;
+
+    if (p.isCrystal) {
+      drawCrystalFlake(ctx, p);
+    } else {
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.sz * 2.6);
+      g.addColorStop(0, `rgba(255, 255, 255, ${p.opacity})`);
+      g.addColorStop(0.5, `rgba(215, 200, 255, ${p.opacity * 0.45})`);
+      g.addColorStop(1, 'transparent');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.sz * 2.6, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity * 0.9})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.sz * 0.8, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+}
+
+// -----------------------------------------------------------
+//  UNIFIED MAIN RENDER LOOP (GUARANTEED CONTINUOUS EXECUTION)
+// -----------------------------------------------------------
+function mainRenderLoop(timestamp) {
+  if (canvas.width === 0 || W === 0 || H === 0) {
+    resizeCanvas();
+  }
+
+  const sec = timestamp * 0.001;
+
+  ctx.clearRect(0, 0, W, H);
+
+  renderStars(sec);
+  renderShootingStar(timestamp);
+  renderSnow(sec);
+
+  requestAnimationFrame(mainRenderLoop);
+}
+
+// Initialize & Bind Listeners
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+window.addEventListener('load', resizeCanvas);
+document.addEventListener('DOMContentLoaded', resizeCanvas);
+
+requestAnimationFrame(mainRenderLoop);
+
+// ===========================================================
+//  WAITLIST FORM SUBMISSION (CLOUDFLARE ENDPOINT)
+// ===========================================================
+const API_ENDPOINT = 'https://kashmakr-api.pages.dev/api';
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  const nameInput = document.getElementById('nameInput');
+  const emailInput = document.getElementById('emailInput');
+  const submitBtn = document.getElementById('submitBtn');
+  const toastMsg = document.getElementById('toastMsg');
+
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+
+  if (!name || !email) {
+    showToast('Please fill in both fields.', 'error');
+    return false;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Joining...';
+  toastMsg.className = 'toast-msg';
+  toastMsg.style.display = 'none';
+
+  try {
+    const res = await fetch(API_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      showToast('✨ Success! You are on the waitlist.', 'success');
+      alert('✨ Success! You are on the waitlist.');
+      nameInput.value = '';
+      emailInput.value = '';
+    } else {
+      showToast(`Error: ${data.error || 'Unknown error'}`, 'error');
+      alert(`Error: ${data.error || 'Unknown error'}`);
+    }
+  } catch (err) {
+    showToast('Network error. Please try again.', 'error');
+    alert('Network error. Please try again.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Join Waitlist';
+  }
+
+  return false;
+}
+
+function showToast(msg, type) {
+  const toastMsg = document.getElementById('toastMsg');
+  toastMsg.textContent = msg;
+  toastMsg.style.display = 'block';
+  toastMsg.className = `toast-msg ${type}`;
+}
+
+// ===========================================================
+//  ADVANCED FRONTEND SECURITY & ANTI-TAMPER SUITE
+// ===========================================================
+(function initSecurityShield() {
+  // 1. Disable right-click context menu (prevents "View Source" / "Inspect")
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    return false;
+  }, { capture: true });
+
+  // 2. Disable text selection via drag (allow inside inputs)
+  document.addEventListener('selectstart', function(e) {
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+      return true;
+    }
+    e.preventDefault();
+    return false;
+  }, { capture: true });
+
+  // 3. Block DevTools keyboard shortcuts (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+Shift+C, Ctrl+S)
+  window.addEventListener('keydown', function(e) {
+    const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+    const mod = isMac ? e.metaKey : e.ctrlKey;
+    const key = e.key ? e.key.toLowerCase() : '';
+    const code = e.keyCode;
+
+    // F12
+    if (key === 'f12' || code === 123) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+
+    // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+    if (mod && e.shiftKey && (key === 'i' || key === 'j' || key === 'c' || code === 73 || code === 74 || code === 67)) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+
+    // Ctrl+U (View Source)
+    if (mod && (key === 'u' || code === 85)) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+
+    // Ctrl+S (Save Page)
+    if (mod && (key === 's' || code === 83)) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, { capture: true });
+
+  // 4. Disable copy/cut (allow pasting into form inputs)
+  document.addEventListener('copy', function(e) {
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+      return true;
+    }
+    e.preventDefault();
+    return false;
+  }, { capture: true });
+
+  document.addEventListener('cut', function(e) {
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+      return true;
+    }
+    e.preventDefault();
+    return false;
+  }, { capture: true });
+
+  // 5. Disable image dragging
+  document.addEventListener('dragstart', function(e) {
+    if (e.target && (e.target.tagName === 'IMG' || e.target.closest('img'))) {
+      e.preventDefault();
+      return false;
+    }
+  }, { capture: true });
+
+  // 6. Print protection (clear view if print is triggered)
+  window.addEventListener('beforeprint', function() {
+    document.body.style.display = 'none';
+  });
+  window.addEventListener('afterprint', function() {
+    document.body.style.display = '';
+  });
+
+  // 7. DevTools detection: auto-blur page and display security overlay
+  const warningModal = document.getElementById('devtoolsWarning');
+  let isShieldActive = false;
+
+  function setShieldState(active) {
+    if (active && !isShieldActive) {
+      isShieldActive = true;
+      document.body.classList.add('devtools-shield-active');
+      if (warningModal) warningModal.classList.add('active');
+    } else if (!active && isShieldActive) {
+      isShieldActive = false;
+      document.body.classList.remove('devtools-shield-active');
+      if (warningModal) warningModal.classList.remove('active');
+    }
+  }
+
+  // Detect docked DevTools by window dimension differences
+  function checkWindowDiff() {
+    const threshold = 160;
+    const wDiff = window.outerWidth - window.innerWidth;
+    const hDiff = window.outerHeight - window.innerHeight;
+    if (wDiff > threshold || hDiff > threshold) {
+      setShieldState(true);
+    } else if (!debuggerTriggered) {
+      setShieldState(false);
+    }
+  }
+
+  // Detect undocked DevTools via debugger timing
+  let debuggerTriggered = false;
+  function checkDebuggerTiming() {
+    const start = performance.now();
+    // In devtools-open state, debugger halts execution for > 100ms
+    // eslint-disable-next-line no-debugger
+    (function() { debugger; })();
+    if (performance.now() - start > 100) {
+      debuggerTriggered = true;
+      setShieldState(true);
+    } else {
+      debuggerTriggered = false;
+      checkWindowDiff();
+    }
+  }
+
+  setInterval(checkWindowDiff, 400);
+  window.addEventListener('resize', checkWindowDiff);
+  setInterval(checkDebuggerTiming, 2000);
+})();
+</script>
+</body>
+</html>
