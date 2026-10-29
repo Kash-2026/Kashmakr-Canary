@@ -25,4 +25,4 @@ def calculate_conversion_likelihood(audience, pain_point):
     audience_factor = random.uniform(0.8, 1.2)
     pain_point_factor = random.uniform(0.8, 1.2)
     score = base_score * audience_factor * pain_point_factor
-    return max(40, min(60, round(score, 2)))
+    return float(max(40.0, min(60.0, round(score, 2))))
