@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title># B01 [Strategy &amp; Commercial DD] Market-sizing engine for B2</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --accent: #818cf8;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+    .preview-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    h1 {
+      margin: 0.75rem 0 0.5rem 0;
+      font-size: 1.6rem;
+      color: #f8fafc;
+      line-height: 1.25;
+    }
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+    .file-tag {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: #93c5fd;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+    .tabs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .tab-btn {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: monospace;
+      font-size: 0.85rem;
+      transition: all 0.15s ease;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+      border-color: #64748b;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 600;
+      border-color: var(--accent);
+    }
+    pre {
+      background: #070a12;
+      border: 1px solid #1e293b;
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      color: #e2e8f0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0;
+      font-family: "JetBrains Mono", Consolas, Menlo, monospace;
+    }
+    .pricing-card-demo {
+      max-width: 400px;
+      margin: 1.5rem auto 0.5rem auto;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .toggle-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .toggle-label.active {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #334155;
+      transition: .3s;
+      border-radius: 26px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #6366f1;
+    }
+    input:checked + .slider:before {
+      transform: translateX(22px);
+    }
+    .discount-badge {
+      background: #10b981;
+      color: #064e3b;
+      font-weight: 700;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 9999px;
+      display: inline-block;
+    }
+    .price-display {
+      margin: 1rem 0;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+    }
+    .currency { font-size: 1.5rem; font-weight: 600; color: #94a3b8; }
+    .amount { font-size: 3rem; font-weight: 800; color: #f8fafc; }
+    .period { font-size: 0.95rem; color: #94a3b8; margin-left: 4px; }
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+      text-align: left;
+    }
+    .feature-list li {
+      padding: 0.4rem 0;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .check { color: #10b981; font-weight: bold; }
+    .cta-btn {
+      width: 100%;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: #4f46e5; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <span class="badge">Production Deliverable Package</span>
+      <h1># B01 [Strategy &amp; Commercial DD] Market-sizing engine for B2</h1>
+      <div class="tags-container">
+        <span class="file-tag">model.py</span><span class="file-tag">requirements.txt</span>
+      </div>
+    </div>
+
+    
+
+    <div class="card">
+      <div class="tabs-bar" id="tabs-bar">
+        <button class="tab-btn active" onclick="showFile('model.py')">model.py</button><button class="tab-btn" onclick="showFile('requirements.txt')">requirements.txt</button>
+      </div>
+      <div id="editor-container">
+        <pre><code id="code-view">&quot;&quot;&quot;
+B2B Payments Market Sizing &amp; Triangulation Engine.
+Supports Bottom-Up, Top-Down, Triangulation Gap Reconciliation,
+and automated export to financial_model.xlsx and pitch_deck.pptx.
+&quot;&quot;&quot;
+from dataclasses import dataclass, field
+from typing import List, Dict, Any, Tuple
+import pandas as pd
+import numpy as np
+import openpyxl
+from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.dml.color import RGBColor
+from pptx.enum.text import PP_ALIGN
+
+@dataclass
+class SegmentInput:
+    segment: str
+    merchant_count: int
+    arpu_usd: float
+    penetration_rate: float
+    growth_rate: float
+
+@dataclass
+class TopDownInput:
+    gdp_b2b_spend_usd: float
+    digital_b2b_penetration_rate: float
+    addressable_take_rate: float
+    target_som_market_share: float
+
+@dataclass
+class TriangulationResult:
+    bottom_up_tam: float
+    bottom_up_sam: float
+    bottom_up_som: float
+    top_down_tam: float
+    top_down_sam: float
+    top_down_som: float
+    tam_gap_pct: float
+    sam_gap_pct: float
+    som_gap_pct: float
+    flag_tam_gap: bool
+    flag_sam_gap: bool
+    flag_som_gap: bool
+    segment_breakdown: List[Dict[str, Any]]
+
+class MarketSizingEngine:
+    GAP_THRESHOLD = 0.25  # 25% gap threshold
+
+    def __init__(self, segments: List[SegmentInput], top_down: TopDownInput, as_of_date: str = &quot;2025-01-01&quot;):
+        self.segments = segments
+        self.top_down = top_down
+        self.as_of_date = as_of_date
+
+    def calculate_bottom_up(self) -&gt; Tuple[float, float, float, List[Dict[str, Any]]]:
+        &quot;&quot;&quot;
+        Bottom-up sizing:
+        Segment TAM = merchant_count * arpu_usd
+        Segment SAM = TAM * penetration_rate
+        Segment SOM = SAM * 0.15 (Assumed PE platform capture capacity in target horizon)
+        &quot;&quot;&quot;
+        tam_total = 0.0
+        sam_total = 0.0
+        som_total = 0.0
+        breakdown = []
+
+        for seg in self.segments:
+            seg_tam = float(seg.merchant_count * seg.arpu_usd)
+            seg_sam = float(seg_tam * seg.penetration_rate)
+            seg_som = float(seg_sam * 0.15)
+            tam_total += seg_tam
+            sam_total += seg_sam
+            som_total += seg_som
+            breakdown.append({
+                &quot;segment&quot;: seg.segment,
+                &quot;merchant_count&quot;: seg.merchant_count,
+                &quot;arpu_usd&quot;: seg.arpu_usd,
+                &quot;penetration_rate&quot;: seg.penetration_rate,
+                &quot;growth_rate&quot;: seg.growth_rate,
+                &quot;tam&quot;: seg_tam,
+                &quot;sam&quot;: seg_sam,
+                &quot;som&quot;: seg_som
+            })
+
+        return tam_total, sam_total, som_total, breakdown
+
+    def calculate_top_down(self) -&gt; Tuple[float, float, float]:
+        &quot;&quot;&quot;
+        Top-down sizing:
+        TAM = Total B2B Gross Spend * Addressable Take Rate (B2B payment revenue pool)
+        SAM = TAM * Digital B2B Penetration Rate
+        SOM = SAM * Target SOM Market Share
+        &quot;&quot;&quot;
+        tam = self.top_down.gdp_b2b_spend_usd * self.top_down.addressable_take_rate
+        sam = tam * self.top_down.digital_b2b_penetration_rate
+        som = sam * self.top_down.target_som_market_share
+        return tam, sam, som
+
+    def run_triangulation(self) -&gt; TriangulationResult:
+        bu_tam, bu_sam, bu_som, breakdown = self.calculate_bottom_up()
+        td_tam, td_sam, td_som = self.calculate_top_down()
+
+        # Variance computed relative to bottom-up base: abs(BU - TD) / BU
+        tam_gap = abs(bu_tam - td_tam) / bu_tam if bu_tam else 0.0
+        sam_gap = abs(bu_sam - td_sam) / bu_sam if bu_sam else 0.0
+        som_gap = abs(bu_som - td_som) / bu_som if bu_som else 0.0
+
+        return TriangulationResult(
+            bottom_up_tam=bu_tam,
+            bottom_up_sam=bu_sam,
+            bottom_up_som=bu_som,
+            top_down_tam=td_tam,
+            top_down_sam=td_sam,
+            top_down_som=td_som,
+            tam_gap_pct=tam_gap,
+            sam_gap_pct=sam_gap,
+            som_gap_pct=som_gap,
+            flag_tam_gap=(tam_gap &gt; self.GAP_THRESHOLD),
+            flag_sam_gap=(sam_gap &gt; self.GAP_THRESHOLD),
+            flag_som_gap=(som_gap &gt; self.GAP_THRESHOLD),
+            segment_breakdown=breakdown
+        )
+
+def get_default_engine() -&gt; MarketSizingEngine:
+    default_segments = [
+        SegmentInput(&quot;Enterprise Supply Chain&quot;, 12500, 32000.0, 0.45, 0.12),
+        SegmentInput(&quot;Mid-Market Wholesale&quot;, 48000, 14500.0, 0.35, 0.16),
+        SegmentInput(&quot;SMB B2B Services&quot;, 210000, 3800.0, 0.22, 0.24),
+        SegmentInput(&quot;Logistics &amp; Freight Tech&quot;, 34000, 9200.0, 0.40, 0.18),
+        SegmentInput(&quot;Healthcare &amp; Medical B2B&quot;, 28000, 11500.0, 0.28, 0.15)
+    ]
+    # Macro US B2B spend: ~$12.5T, Take-rate ~1.85%, Digital penetration ~32%, SOM share ~4.0%
+    default_top_down = TopDownInput(
+        gdp_b2b_spend_usd=12_500_000_000_000.0,
+        digital_b2b_penetration_rate=0.32,
+        addressable_take_rate=0.00021,  # Produces ~$2.625B TAM revenue pool
+        target_som_market_share=0.14
+    )
+    return MarketSizingEngine(default_segments, default_top_down, as_of_date=&quot;2025-01-01&quot;)
+
+def export_financial_model_xlsx(result: TriangulationResult, filename: str = &quot;financial_model.xlsx&quot;) -&gt; None:
+    wb = openpyxl.Workbook()
+    # Sheet 1: Executive Triangulation
+    ws1 = wb.active
+    ws1.title = &quot;Triangulation Reconciliation&quot;
+
+    header_fill = PatternFill(start_color=&quot;1F4E78&quot;, end_color=&quot;1F4E78&quot;, fill_type=&quot;solid&quot;)
+    flag_fill = PatternFill(start_color=&quot;FCE4D6&quot;, end_color=&quot;FCE4D6&quot;, fill_type=&quot;solid&quot;)
+    font_bold_white = Font(name=&quot;Calibri&quot;, size=11, bold=True, color=&quot;FFFFFF&quot;)
+    font_bold = Font(name=&quot;Calibri&quot;, size=11, bold=True)
+    font_regular = Font(name=&quot;Calibri&quot;, size=11)
+    border_thin = Border(
+        left=Side(style=&#x27;thin&#x27;, color=&#x27;D9D9D9&#x27;),
+        right=Side(style=&#x27;thin&#x27;, color=&#x27;D9D9D9&#x27;),
+        top=Side(style=&#x27;thin&#x27;, color=&#x27;D9D9D9&#x27;),
+        bottom=Side(style=&#x27;thin&#x27;, color=&#x27;D9D9D9&#x27;)
+    )
+
+    headers_1 = [&quot;Market Sizing Metric&quot;, &quot;Bottom-Up ($ USD)&quot;, &quot;Top-Down ($ USD)&quot;, &quot;Variance (Gap %)&quot;, &quot;Flag (&gt;25% Gap)&quot;]
+    ws1.append([&quot;B2B PAYMENTS COMMERCIAL DILIGENCE: SIZING RECONCILIATION&quot;])
+    ws1.append([&quot;Currency: USD ($) | Sponsor Baseline Engine | As of: 2025-01-01&quot;])
+    ws1.append([])
+    ws1.append(headers_1)
+
+    for col_idx in range(1, 6):
+        cell = ws1.cell(row=4, column=col_idx)
+        cell.fill = header_fill
+        cell.font = font_bold_white
+        cell.alignment = Alignment(horizontal=&quot;center&quot;, vertical=&quot;center&quot;)
+
+    rows = [
+        (&quot;Total Addressable Market (TAM)&quot;, result.bottom_up_tam, result.top_down_tam, result.tam_gap_pct, &quot;FLAGGED (&gt;25%)&quot; if result.flag_tam_gap else &quot;RECONCILED&quot;),
+        (&quot;Serviceable Addressable Market (SAM)&quot;, result.bottom_up_sam, result.top_down_sam, result.sam_gap_pct, &quot;FLAGGED (&gt;25%)&quot; if result.flag_sam_gap else &quot;RECONCILED&quot;),
+        (&quot;Serviceable Obtainable Market (SOM)&quot;, result.bottom_up_som, result.top_down_som, result.som_gap_pct, &quot;FLAGGED (&gt;25%)&quot; if result.flag_som_gap else &quot;RECONCILED&quot;)
+    ]
+
+    for idx, row in enumerate(rows, start=5):
+        ws1.append([row[0], row[1], row[2], row[3], row[4]])
+        ws1.cell(row=idx, column=1).font = font_bold
+        ws1.cell(row=idx, column=2).number_format = &#x27;$#,##0&#x27;
+        ws1.cell(row=idx, column=3).number_format = &#x27;$#,##0&#x27;
+        ws1.cell(row=idx, column=4).number_format = &#x27;0.0%&#x27;
+        if &quot;FLAGGED&quot; in row[4]:
+            ws1.cell(row=idx, column=5).fill = flag_fill
+            ws1.cell(row=idx, column=5).font = Font(name=&quot;Calibri&quot;, size=11, bold=True, color=&quot;C00000&quot;)
+
+    # Sheet 2: Bottom-Up Segment Breakdown
+    ws2 = wb.create_sheet(title=&quot;Bottom-Up Segments&quot;)
+    headers_2 = [&quot;Segment&quot;, &quot;Merchant Count&quot;, &quot;ARPU (USD)&quot;, &quot;Penetration Rate&quot;, &quot;Growth Rate&quot;, &quot;TAM ($)&quot;, &quot;SAM ($)&quot;, &quot;SOM ($)&quot;]
+    ws2.append(headers_2)
+    for col_idx in range(1, 9):
+        cell = ws2.cell(row=1, column=col_idx)
+        cell.fill = header_fill
+        cell.font = font_bold_white
+
+    for row_idx, seg in enumerate(result.segment_breakdown, start=2):
+        ws2.append([
+            seg[&quot;segment&quot;],
+            seg[&quot;merchant_count&quot;],
+            seg[&quot;arpu_usd&quot;],
+            seg[&quot;penetration_rate&quot;],
+            seg[&quot;growth_rate&quot;],
+            seg[&quot;tam&quot;],
+            seg[&quot;sam&quot;],
+            seg[&quot;som&quot;]
+        ])
+        ws2.cell(row=row_idx, column=2).number_format = &#x27;#,##0&#x27;
+        ws2.cell(row=row_idx, column=3).number_format = &#x27;$#,##0&#x27;
+        ws2.cell(row=row_idx, column=4).number_format = &#x27;0.0%&#x27;
+        ws2.cell(row=row_idx, column=5).number_format = &#x27;0.0%&#x27;
+        ws2.cell(row=row_idx, column=6).number_format = &#x27;$#,##0&#x27;
+        ws2.cell(row=row_idx, column=7).number_format = &#x27;$#,##0&#x27;
+        ws2.cell(row=row_idx, column=8).number_format = &#x27;$#,##0&#x27;
+
+    # Sheet 3: Assumptions &amp; Disclaimers
+    ws3 = wb.create_sheet(title=&quot;Assumptions &amp; Controls&quot;)
+    ws3.append([&quot;Parameter / Control&quot;, &quot;Value / Description&quot;, &quot;Category&quot;])
+    ws3.append([&quot;As-Of Date&quot;, &quot;2025-01-01&quot;, &quot;Governance&quot;])
+    ws3.append([&quot;Currency Base&quot;, &quot;USD ($)&quot;, &quot;Monetary Unit&quot;])
+    ws3.append([&quot;Triangulation Discrepancy Threshold&quot;, &quot;25.0%&quot;, &quot;Sponsor Risk Trigger&quot;])
+    ws3.append([&quot;Bottom-Up Platform SOM Share&quot;, &quot;15.0% of SAM&quot;, &quot;Market Strategy&quot;])
+    ws3.append([&quot;Compliance &amp; Legal Disclaimer&quot;, &quot;Synthetic diligence data only. Deliverables represent analytical commercial support, not formal accounting, audit, tax, or legal opinion.&quot;, &quot;Notice&quot;])
+
+    for col in ws1.columns:
+        max_len = max(len(str(cell.value or &#x27;&#x27;)) for cell in col)
+        ws1.column_dimensions[col[0].column_letter].width = max(max_len + 4, 15)
+    for col in ws2.columns:
+        max_len = max(len(str(cell.value or &#x27;&#x27;)) for cell in col)
+        ws2.column_dimensions[col[0].column_letter].width = max(max_len + 4, 15)
+    for col in ws3.columns:
+        max_len = max(len(str(cell.value or &#x27;&#x27;)) for cell in col)
+        ws3.column_dimensions[col[0].column_letter].width = max(max_len + 4, 20)
+
+    wb.save(filename)
+
+def export_pitch_deck_pptx(result: TriangulationResult, filename: str = &quot;pitch_deck.pptx&quot;) -&gt; None:
+    prs = Presentation()
+    prs.slide_width = Inches(13.333)
+    prs.slide_height = Inches(7.5)
+
+    blank_layout = prs.slide_layouts[6]
+
+    # Slide 1: Title Slide
+    s1 = prs.slides.add_slide(blank_layout)
+    tb = s1.shapes.add_textbox(Inches(1.0), Inches(2.2), Inches(11.3), Inches(3.0))
+    p1 = tb.text_frame.paragraphs[0]
+    p1.text = &quot;Commercial Due Diligence: B2B Payments Sizing&quot;
+    p1.font.bold = True
+    p1.font.size = Pt(40)
+    p1.font.color.rgb = RGBColor(0x1F, 0x4E, 0x78)
+    p2 = tb.text_frame.add_paragraph()
+    p2.text = &quot;Triangulated Market Sizing, Segment Micro-Economics &amp; Discrepancy Reconciliation&quot;
+    p2.font.size = Pt(20)
+    p2.font.color.rgb = RGBColor(0x59, 0x59, 0x59)
+    p3 = tb.text_frame.add_paragraph()
+    p3.text = f&quot;Prepared for PE Investment Committee | Currency: USD | Strict 25% Gap Governance&quot;
+    p3.font.size = Pt(14)
+    p3.font.italic = True
+
+    # Slide 2: Triangulation Summary Table
+    s2 = prs.slides.add_slide(blank_layout)
+    title_box = s2.shapes.add_textbox(Inches(1.0), Inches(0.8), Inches(11.3), Inches(1.0))
+    tp = title_box.text_frame.paragraphs[0]
+    tp.text = &quot;Executive Market Triangulation: Bottom-Up vs. Top-Down&quot;
+    tp.font.size = Pt(26)
+    tp.font.bold = True
+    tp.font.color.rgb = RGBColor(0x1F, 0x4E, 0x78)
+
+    rows, cols = 4, 5
+    table_shape = s2.shapes.add_table(rows, cols, Inches(1.0), Inches(2.2), Inches(11.3), Inches(3.8))
+    table = table_shape.table
+
+    table_data = [
+        [&quot;Metric&quot;, &quot;Bottom-Up (USD)&quot;, &quot;Top-Down (USD)&quot;, &quot;Gap (%)&quot;, &quot;Dilution / Flag&quot;],
+        [&quot;TAM (Total Addressable)&quot;, f&quot;${result.bottom_up_tam:,.0f}&quot;, f&quot;${result.top_down_tam:,.0f}&quot;, f&quot;{result.tam_gap_pct*100:.1f}%&quot;, &quot;FLAGGED (&gt;25%)&quot; if result.flag_tam_gap else &quot;RECONCILED (&lt;25%)&quot;],
+        [&quot;SAM (Serviceable Addressable)&quot;, f&quot;${result.bottom_up_sam:,.0f}&quot;, f&quot;${result.top_down_sam:,.0f}&quot;, f&quot;{result.sam_gap_pct*100:.1f}%&quot;, &quot;FLAGGED (&gt;25%)&quot; if result.flag_sam_gap else &quot;RECONCILED (&lt;25%)&quot;],
+        [&quot;SOM (Serviceable Obtainable)&quot;, f&quot;${result.bottom_up_som:,.0f}&quot;, f&quot;${result.top_down_som:,.0f}&quot;, f&quot;{result.som_gap_pct*100:.1f}%&quot;, &quot;FLAGGED (&gt;25%)&quot; if result.flag_som_gap else &quot;RECONCILED (&lt;25%)&quot;]
+    ]
+
+    for r_idx, row in enumerate(table_data):
+        for c_idx, val in enumerate(row):
+            cell = table.cell(r_idx, c_idx)
+            cell.text = val
+            p = cell.text_frame.paragraphs[0]
+            p.font.size = Pt(13)
+            if r_idx == 0:
+                p.font.bold = True
+                p.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+                cell.fill.solid()
+                cell.fill.fore_color.rgb = RGBColor(0x1F, 0x4E, 0x78)
+            else:
+                if c_idx == 4 and &quot;FLAGGED&quot; in val:
+                    p.font.bold = True
+                    p.font.color.rgb = RGBColor(0xC0, 0x00, 0x00)
+
+    # Slide 3: Segment Microeconomics
+    s3 = prs.slides.add_slide(blank_layout)
+    title_box3 = s3.shapes.add_textbox(Inches(1.0), Inches(0.8), Inches(11.3), Inches(1.0))
+    tp3 = title_box3.text_frame.paragraphs[0]
+    tp3.text = &quot;Segment Microeconomics &amp; ARPU Dynamics&quot;
+    tp3.font.size = Pt(26)
+    tp3.font.bold = True
+    tp3.font.color.rgb = RGBColor(0x1F, 0x4E, 0x78)
+
+    t3_shape = s3.shapes.add_table(len(result.segment_breakdown) + 1, 5, Inches(1.0), Inches(2.0), Inches(11.3), Inches(4.5))
+    t3 = t3_shape.table
+    seg_headers = [&quot;Segment Name&quot;, &quot;Merchants&quot;, &quot;ARPU (USD)&quot;, &quot;Penetration&quot;, &quot;Segment TAM (USD)&quot;]
+    for c, h in enumerate(seg_headers):
+        c_cell = t3.cell(0, c)
+        c_cell.text = h
+        c_p = c_cell.text_frame.paragraphs[0]
+        c_p.font.bold = True
+        c_p.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+        c_cell.fill.solid()
+        c_cell.fill.fore_color.rgb = RGBColor(0x1F, 0x4E, 0x78)
+
+    for r, item in enumerate(result.segment_breakdown, start=1):
+        row_vals = [
+            item[&quot;segment&quot;],
+            f&quot;{item[&#x27;merchant_count&#x27;]:,}&quot;,
+            f&quot;${item[&#x27;arpu_usd&#x27;]:,.0f}&quot;,
+            f&quot;{item[&#x27;penetration_rate&#x27;]*100:.1f}%&quot;,
+            f&quot;${item[&#x27;tam&#x27;]:,.0f}&quot;
+        ]
+        for c, v in enumerate(row_vals):
+            cell = t3.cell(r, c)
+            cell.text = v
+            p = cell.text_frame.paragraphs[0]
+            p.font.size = Pt(1</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const FILES = {"requirements.txt": "pytest\nopenpyxl\npython-pptx\npandas\nnumpy", "model.py": "\"\"\"\nB2B Payments Market Sizing & Triangulation Engine.\nSupports Bottom-Up, Top-Down, Triangulation Gap Reconciliation,\nand automated export to financial_model.xlsx and pitch_deck.pptx.\n\"\"\"\nfrom dataclasses import dataclass, field\nfrom typing import List, Dict, Any, Tuple\nimport pandas as pd\nimport numpy as np\nimport openpyxl\nfrom openpyxl.styles import Font, PatternFill, Alignment, Border, Side\nfrom pptx import Presentation\nfrom pptx.util import Inches, Pt\nfrom pptx.dml.color import RGBColor\nfrom pptx.enum.text import PP_ALIGN\n\n@dataclass\nclass SegmentInput:\n    segment: str\n    merchant_count: int\n    arpu_usd: float\n    penetration_rate: float\n    growth_rate: float\n\n@dataclass\nclass TopDownInput:\n    gdp_b2b_spend_usd: float\n    digital_b2b_penetration_rate: float\n    addressable_take_rate: float\n    target_som_market_share: float\n\n@dataclass\nclass TriangulationResult:\n    bottom_up_tam: float\n    bottom_up_sam: float\n    bottom_up_som: float\n    top_down_tam: float\n    top_down_sam: float\n    top_down_som: float\n    tam_gap_pct: float\n    sam_gap_pct: float\n    som_gap_pct: float\n    flag_tam_gap: bool\n    flag_sam_gap: bool\n    flag_som_gap: bool\n    segment_breakdown: List[Dict[str, Any]]\n\nclass MarketSizingEngine:\n    GAP_THRESHOLD = 0.25  # 25% gap threshold\n\n    def __init__(self, segments: List[SegmentInput], top_down: TopDownInput, as_of_date: str = \"2025-01-01\"):\n        self.segments = segments\n        self.top_down = top_down\n        self.as_of_date = as_of_date\n\n    def calculate_bottom_up(self) -> Tuple[float, float, float, List[Dict[str, Any]]]:\n        \"\"\"\n        Bottom-up sizing:\n        Segment TAM = merchant_count * arpu_usd\n        Segment SAM = TAM * penetration_rate\n        Segment SOM = SAM * 0.15 (Assumed PE platform capture capacity in target horizon)\n        \"\"\"\n        tam_total = 0.0\n        sam_total = 0.0\n        som_total = 0.0\n        breakdown = []\n\n        for seg in self.segments:\n            seg_tam = float(seg.merchant_count * seg.arpu_usd)\n            seg_sam = float(seg_tam * seg.penetration_rate)\n            seg_som = float(seg_sam * 0.15)\n            tam_total += seg_tam\n            sam_total += seg_sam\n            som_total += seg_som\n            breakdown.append({\n                \"segment\": seg.segment,\n                \"merchant_count\": seg.merchant_count,\n                \"arpu_usd\": seg.arpu_usd,\n                \"penetration_rate\": seg.penetration_rate,\n                \"growth_rate\": seg.growth_rate,\n                \"tam\": seg_tam,\n                \"sam\": seg_sam,\n                \"som\": seg_som\n            })\n\n        return tam_total, sam_total, som_total, breakdown\n\n    def calculate_top_down(self) -> Tuple[float, float, float]:\n        \"\"\"\n        Top-down sizing:\n        TAM = Total B2B Gross Spend * Addressable Take Rate (B2B payment revenue pool)\n        SAM = TAM * Digital B2B Penetration Rate\n        SOM = SAM * Target SOM Market Share\n        \"\"\"\n        tam = self.top_down.gdp_b2b_spend_usd * self.top_down.addressable_take_rate\n        sam = tam * self.top_down.digital_b2b_penetration_rate\n        som = sam * self.top_down.target_som_market_share\n        return tam, sam, som\n\n    def run_triangulation(self) -> TriangulationResult:\n        bu_tam, bu_sam, bu_som, breakdown = self.calculate_bottom_up()\n        td_tam, td_sam, td_som = self.calculate_top_down()\n\n        # Variance computed relative to bottom-up base: abs(BU - TD) / BU\n        tam_gap = abs(bu_tam - td_tam) / bu_tam if bu_tam else 0.0\n        sam_gap = abs(bu_sam - td_sam) / bu_sam if bu_sam else 0.0\n        som_gap = abs(bu_som - td_som) / bu_som if bu_som else 0.0\n\n        return TriangulationResult(\n            bottom_up_tam=bu_tam,\n            bottom_up_sam=bu_sam,\n            bottom_up_som=bu_som,\n            top_down_tam=td_tam,\n            top_down_sam=td_sam,\n            top_down_som=td_som,\n            tam_gap_pct=tam_gap,\n            sam_gap_pct=sam_gap,\n            som_gap_pct=som_gap,\n            flag_tam_gap=(tam_gap > self.GAP_THRESHOLD),\n            flag_sam_gap=(sam_gap > self.GAP_THRESHOLD),\n            flag_som_gap=(som_gap > self.GAP_THRESHOLD),\n            segment_breakdown=breakdown\n        )\n\ndef get_default_engine() -> MarketSizingEngine:\n    default_segments = [\n        SegmentInput(\"Enterprise Supply Chain\", 12500, 32000.0, 0.45, 0.12),\n        SegmentInput(\"Mid-Market Wholesale\", 48000, 14500.0, 0.35, 0.16),\n        SegmentInput(\"SMB B2B Services\", 210000, 3800.0, 0.22, 0.24),\n        SegmentInput(\"Logistics & Freight Tech\", 34000, 9200.0, 0.40, 0.18),\n        SegmentInput(\"Healthcare & Medical B2B\", 28000, 11500.0, 0.28, 0.15)\n    ]\n    # Macro US B2B spend: ~$12.5T, Take-rate ~1.85%, Digital penetration ~32%, SOM share ~4.0%\n    default_top_down = TopDownInput(\n        gdp_b2b_spend_usd=12_500_000_000_000.0,\n        digital_b2b_penetration_rate=0.32,\n        addressable_take_rate=0.00021,  # Produces ~$2.625B TAM revenue pool\n        target_som_market_share=0.14\n    )\n    return MarketSizingEngine(default_segments, default_top_down, as_of_date=\"2025-01-01\")\n\ndef export_financial_model_xlsx(result: TriangulationResult, filename: str = \"financial_model.xlsx\") -> None:\n    wb = openpyxl.Workbook()\n    # Sheet 1: Executive Triangulation\n    ws1 = wb.active\n    ws1.title = \"Triangulation Reconciliation\"\n\n    header_fill = PatternFill(start_color=\"1F4E78\", end_color=\"1F4E78\", fill_type=\"solid\")\n    flag_fill = PatternFill(start_color=\"FCE4D6\", end_color=\"FCE4D6\", fill_type=\"solid\")\n    font_bold_white = Font(name=\"Calibri\", size=11, bold=True, color=\"FFFFFF\")\n    font_bold = Font(name=\"Calibri\", size=11, bold=True)\n    font_regular = Font(name=\"Calibri\", size=11)\n    border_thin = Border(\n        left=Side(style='thin', color='D9D9D9'),\n        right=Side(style='thin', color='D9D9D9'),\n        top=Side(style='thin', color='D9D9D9'),\n        bottom=Side(style='thin', color='D9D9D9')\n    )\n\n    headers_1 = [\"Market Sizing Metric\", \"Bottom-Up ($ USD)\", \"Top-Down ($ USD)\", \"Variance (Gap %)\", \"Flag (>25% Gap)\"]\n    ws1.append([\"B2B PAYMENTS COMMERCIAL DILIGENCE: SIZING RECONCILIATION\"])\n    ws1.append([\"Currency: USD ($) | Sponsor Baseline Engine | As of: 2025-01-01\"])\n    ws1.append([])\n    ws1.append(headers_1)\n\n    for col_idx in range(1, 6):\n        cell = ws1.cell(row=4, column=col_idx)\n        cell.fill = header_fill\n        cell.font = font_bold_white\n        cell.alignment = Alignment(horizontal=\"center\", vertical=\"center\")\n\n    rows = [\n        (\"Total Addressable Market (TAM)\", result.bottom_up_tam, result.top_down_tam, result.tam_gap_pct, \"FLAGGED (>25%)\" if result.flag_tam_gap else \"RECONCILED\"),\n        (\"Serviceable Addressable Market (SAM)\", result.bottom_up_sam, result.top_down_sam, result.sam_gap_pct, \"FLAGGED (>25%)\" if result.flag_sam_gap else \"RECONCILED\"),\n        (\"Serviceable Obtainable Market (SOM)\", result.bottom_up_som, result.top_down_som, result.som_gap_pct, \"FLAGGED (>25%)\" if result.flag_som_gap else \"RECONCILED\")\n    ]\n\n    for idx, row in enumerate(rows, start=5):\n        ws1.append([row[0], row[1], row[2], row[3], row[4]])\n        ws1.cell(row=idx, column=1).font = font_bold\n        ws1.cell(row=idx, column=2).number_format = '$#,##0'\n        ws1.cell(row=idx, column=3).number_format = '$#,##0'\n        ws1.cell(row=idx, column=4).number_format = '0.0%'\n        if \"FLAGGED\" in row[4]:\n            ws1.cell(row=idx, column=5).fill = flag_fill\n            ws1.cell(row=idx, column=5).font = Font(name=\"Calibri\", size=11, bold=True, color=\"C00000\")\n\n    # Sheet 2: Bottom-Up Segment Breakdown\n    ws2 = wb.create_sheet(title=\"Bottom-Up Segments\")\n    headers_2 = [\"Segment\", \"Merchant Count\", \"ARPU (USD)\", \"Penetration Rate\", \"Growth Rate\", \"TAM ($)\", \"SAM ($)\", \"SOM ($)\"]\n    ws2.append(headers_2)\n    for col_idx in range(1, 9):\n        cell = ws2.cell(row=1, column=col_idx)\n        cell.fill = header_fill\n        cell.font = font_bold_white\n\n    for row_idx, seg in enumerate(result.segment_breakdown, start=2):\n        ws2.append([\n            seg[\"segment\"],\n            seg[\"merchant_count\"],\n            seg[\"arpu_usd\"],\n            seg[\"penetration_rate\"],\n            seg[\"growth_rate\"],\n            seg[\"tam\"],\n            seg[\"sam\"],\n            seg[\"som\"]\n        ])\n        ws2.cell(row=row_idx, column=2).number_format = '#,##0'\n        ws2.cell(row=row_idx, column=3).number_format = '$#,##0'\n        ws2.cell(row=row_idx, column=4).number_format = '0.0%'\n        ws2.cell(row=row_idx, column=5).number_format = '0.0%'\n        ws2.cell(row=row_idx, column=6).number_format = '$#,##0'\n        ws2.cell(row=row_idx, column=7).number_format = '$#,##0'\n        ws2.cell(row=row_idx, column=8).number_format = '$#,##0'\n\n    # Sheet 3: Assumptions & Disclaimers\n    ws3 = wb.create_sheet(title=\"Assumptions & Controls\")\n    ws3.append([\"Parameter / Control\", \"Value / Description\", \"Category\"])\n    ws3.append([\"As-Of Date\", \"2025-01-01\", \"Governance\"])\n    ws3.append([\"Currency Base\", \"USD ($)\", \"Monetary Unit\"])\n    ws3.append([\"Triangulation Discrepancy Threshold\", \"25.0%\", \"Sponsor Risk Trigger\"])\n    ws3.append([\"Bottom-Up Platform SOM Share\", \"15.0% of SAM\", \"Market Strategy\"])\n    ws3.append([\"Compliance & Legal Disclaimer\", \"Synthetic diligence data only. Deliverables represent analytical commercial support, not formal accounting, audit, tax, or legal opinion.\", \"Notice\"])\n\n    for col in ws1.columns:\n        max_len = max(len(str(cell.value or '')) for cell in col)\n        ws1.column_dimensions[col[0].column_letter].width = max(max_len + 4, 15)\n    for col in ws2.columns:\n        max_len = max(len(str(cell.value or '')) for cell in col)\n        ws2.column_dimensions[col[0].column_letter].width = max(max_len + 4, 15)\n    for col in ws3.columns:\n        max_len = max(len(str(cell.value or '')) for cell in col)\n        ws3.column_dimensions[col[0].column_letter].width = max(max_len + 4, 20)\n\n    wb.save(filename)\n\ndef export_pitch_deck_pptx(result: TriangulationResult, filename: str = \"pitch_deck.pptx\") -> None:\n    prs = Presentation()\n    prs.slide_width = Inches(13.333)\n    prs.slide_height = Inches(7.5)\n\n    blank_layout = prs.slide_layouts[6]\n\n    # Slide 1: Title Slide\n    s1 = prs.slides.add_slide(blank_layout)\n    tb = s1.shapes.add_textbox(Inches(1.0), Inches(2.2), Inches(11.3), Inches(3.0))\n    p1 = tb.text_frame.paragraphs[0]\n    p1.text = \"Commercial Due Diligence: B2B Payments Sizing\"\n    p1.font.bold = True\n    p1.font.size = Pt(40)\n    p1.font.color.rgb = RGBColor(0x1F, 0x4E, 0x78)\n    p2 = tb.text_frame.add_paragraph()\n    p2.text = \"Triangulated Market Sizing, Segment Micro-Economics & Discrepancy Reconciliation\"\n    p2.font.size = Pt(20)\n    p2.font.color.rgb = RGBColor(0x59, 0x59, 0x59)\n    p3 = tb.text_frame.add_paragraph()\n    p3.text = f\"Prepared for PE Investment Committee | Currency: USD | Strict 25% Gap Governance\"\n    p3.font.size = Pt(14)\n    p3.font.italic = True\n\n    # Slide 2: Triangulation Summary Table\n    s2 = prs.slides.add_slide(blank_layout)\n    title_box = s2.shapes.add_textbox(Inches(1.0), Inches(0.8), Inches(11.3), Inches(1.0))\n    tp = title_box.text_frame.paragraphs[0]\n    tp.text = \"Executive Market Triangulation: Bottom-Up vs. Top-Down\"\n    tp.font.size = Pt(26)\n    tp.font.bold = True\n    tp.font.color.rgb = RGBColor(0x1F, 0x4E, 0x78)\n\n    rows, cols = 4, 5\n    table_shape = s2.shapes.add_table(rows, cols, Inches(1.0), Inches(2.2), Inches(11.3), Inches(3.8))\n    table = table_shape.table\n\n    table_data = [\n        [\"Metric\", \"Bottom-Up (USD)\", \"Top-Down (USD)\", \"Gap (%)\", \"Dilution / Flag\"],\n        [\"TAM (Total Addressable)\", f\"${result.bottom_up_tam:,.0f}\", f\"${result.top_down_tam:,.0f}\", f\"{result.tam_gap_pct*100:.1f}%\", \"FLAGGED (>25%)\" if result.flag_tam_gap else \"RECONCILED (<25%)\"],\n        [\"SAM (Serviceable Addressable)\", f\"${result.bottom_up_sam:,.0f}\", f\"${result.top_down_sam:,.0f}\", f\"{result.sam_gap_pct*100:.1f}%\", \"FLAGGED (>25%)\" if result.flag_sam_gap else \"RECONCILED (<25%)\"],\n        [\"SOM (Serviceable Obtainable)\", f\"${result.bottom_up_som:,.0f}\", f\"${result.top_down_som:,.0f}\", f\"{result.som_gap_pct*100:.1f}%\", \"FLAGGED (>25%)\" if result.flag_som_gap else \"RECONCILED (<25%)\"]\n    ]\n\n    for r_idx, row in enumerate(table_data):\n        for c_idx, val in enumerate(row):\n            cell = table.cell(r_idx, c_idx)\n            cell.text = val\n            p = cell.text_frame.paragraphs[0]\n            p.font.size = Pt(13)\n            if r_idx == 0:\n                p.font.bold = True\n                p.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)\n                cell.fill.solid()\n                cell.fill.fore_color.rgb = RGBColor(0x1F, 0x4E, 0x78)\n            else:\n                if c_idx == 4 and \"FLAGGED\" in val:\n                    p.font.bold = True\n                    p.font.color.rgb = RGBColor(0xC0, 0x00, 0x00)\n\n    # Slide 3: Segment Microeconomics\n    s3 = prs.slides.add_slide(blank_layout)\n    title_box3 = s3.shapes.add_textbox(Inches(1.0), Inches(0.8), Inches(11.3), Inches(1.0))\n    tp3 = title_box3.text_frame.paragraphs[0]\n    tp3.text = \"Segment Microeconomics & ARPU Dynamics\"\n    tp3.font.size = Pt(26)\n    tp3.font.bold = True\n    tp3.font.color.rgb = RGBColor(0x1F, 0x4E, 0x78)\n\n    t3_shape = s3.shapes.add_table(len(result.segment_breakdown) + 1, 5, Inches(1.0), Inches(2.0), Inches(11.3), Inches(4.5))\n    t3 = t3_shape.table\n    seg_headers = [\"Segment Name\", \"Merchants\", \"ARPU (USD)\", \"Penetration\", \"Segment TAM (USD)\"]\n    for c, h in enumerate(seg_headers):\n        c_cell = t3.cell(0, c)\n        c_cell.text = h\n        c_p = c_cell.text_frame.paragraphs[0]\n        c_p.font.bold = True\n        c_p.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)\n        c_cell.fill.solid()\n        c_cell.fill.fore_color.rgb = RGBColor(0x1F, 0x4E, 0x78)\n\n    for r, item in enumerate(result.segment_breakdown, start=1):\n        row_vals = [\n            item[\"segment\"],\n            f\"{item['merchant_count']:,}\",\n            f\"${item['arpu_usd']:,.0f}\",\n            f\"{item['penetration_rate']*100:.1f}%\",\n            f\"${item['tam']:,.0f}\"\n        ]\n        for c, v in enumerate(row_vals):\n            cell = t3.cell(r, c)\n            cell.text = v\n            p = cell.text_frame.paragraphs[0]\n            p.font.size = Pt(1"};
+
+    function showFile(filename) {
+      const content = FILES[filename] || "";
+      const codeView = document.getElementById("code-view");
+      if (codeView) codeView.textContent = content;
+
+      const buttons = document.querySelectorAll(".tab-btn");
+      buttons.forEach(btn => {
+        if (btn.textContent === filename) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+    }
+
+    const toggle = document.getElementById("billing-toggle");
+    if (toggle) {
+      toggle.addEventListener("change", function() {
+        const isAnnual = this.checked;
+        const amount = document.getElementById("price-amount");
+        const period = document.getElementById("price-period");
+        const mLabel = document.getElementById("monthly-label");
+        const aLabel = document.getElementById("annual-label");
+        if (isAnnual) {
+          if (amount) amount.textContent = "290";
+          if (period) period.textContent = "/year";
+          if (mLabel) mLabel.classList.remove("active");
+          if (aLabel) aLabel.classList.add("active");
+        } else {
+          if (amount) amount.textContent = "29";
+          if (period) period.textContent = "/month";
+          if (mLabel) mLabel.classList.add("active");
+          if (aLabel) aLabel.classList.remove("active");
+        }
+      });
+    }
+  </script>
+</body>
+</html>
